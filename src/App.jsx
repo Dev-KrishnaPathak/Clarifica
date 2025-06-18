@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import LoginPage from "./LoginPage";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setIsScrolled(scrollTop > 40);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navigateToLogin = () => {
     setCurrentPage("login");
@@ -20,7 +31,7 @@ function App() {
   return (
     <div className="app">
       {/* Top Right Buttons */}
-      <div className="top-right-buttons">
+      <div className={`top-right-buttons ${isScrolled ? 'hidden' : ''}`}>
         <button className="btn-secondary" onClick={navigateToLogin}>Log In</button>
         <button className="btn-primary" onClick={navigateToLogin}>Sign Up</button>
       </div>
