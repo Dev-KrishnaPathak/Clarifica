@@ -30,6 +30,8 @@ function App() {
 
   return (
     <div className="app">
+      {/* Top Left Logo */}
+      <img src="/logo.png" alt="Clarifica Logo" className="top-left-logo" />
       {/* Top Right Buttons */}
       <div className={`top-right-buttons ${isScrolled ? 'hidden' : ''}`}>
         <button className="btn-secondary" onClick={navigateToLogin}>Log In</button>
@@ -51,16 +53,10 @@ function App() {
           </video>
           <div className="hero-overlay"></div>
         </div>
-        
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-title">
-              <span className="title-c">
-                C
-                <span className="title-logo">
-                  <img src="/logo.png" alt="Clarifica Logo" className="logo-image" />
-                </span>
-              </span>
+              <span className="title-c">C</span>
               <span className="title-rest">larifica</span>
             </h1>
           </div>
