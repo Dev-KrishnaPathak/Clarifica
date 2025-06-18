@@ -283,19 +283,25 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .login-logo {
+    font-size: 22px;
+  }
+  .login-logo-image {
+    height: 1em;
+  }
+}
+
 @media (max-width: 768px) {
   .login-container {
     padding: 10px;
   }
-  
   .login-card {
     padding: 30px 20px;
   }
-  
   .social-buttons {
     flex-direction: column;
   }
-  
   .form-options {
     flex-direction: column;
     gap: 15px;
@@ -307,15 +313,15 @@
   .login-card {
     padding: 25px 15px;
   }
-  
   .login-logo {
     font-size: 24px;
   }
-  
+  .login-logo-image {
+    height: 0.8em;
+  }
   .form-group input {
     padding: 14px;
   }
-  
   .submit-btn {
     padding: 14px;
   }
