@@ -870,7 +870,7 @@
     height: 0.9em;
   }
   .top-right-buttons {
-    top: 20px;
+    top: 0;
     right: 20px;
     gap: 12px;
   }
