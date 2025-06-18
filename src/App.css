@@ -858,15 +858,6 @@
   .container {
     padding: 0 16px;
   }
-  .hero {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    min-height: 100vh;
-    height: 100vh;
-  }
   .hero-title {
     font-size: 3rem;
     gap: 0em;
