@@ -275,7 +275,7 @@
 }
 
 .hero-title {
-  font-family: 'Melodrama', serif;
+  font-family: 'Boska', serif;
   font-size: 8rem;
   font-weight: 400;
   line-height: 1;
@@ -861,7 +861,7 @@
   .hero-title {
     font-size: 3rem;
     gap: 0em;
-    font-family: 'Melodrama', 'Times New Roman', Times, serif;
+    font-family: 'Boska', 'Times New Roman', Times, serif;
   }
   .title-logo {
     transform: translate(-45%, -50%);
