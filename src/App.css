@@ -861,6 +861,7 @@
   .hero-title {
     font-size: 3rem;
     gap: 0em;
+    font-family: 'Melodrama', 'Times New Roman', Times, serif;
   }
   .title-logo {
     transform: translate(-45%, -50%);
