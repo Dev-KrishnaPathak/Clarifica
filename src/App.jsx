@@ -1,43 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import LoginPage from "./LoginPage";
 
-function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-  const [isScrolled, setIsScrolled] = useState(false);
+function Dashboard() {
+  return (
+    <div style={{ color: '#222', textAlign: 'center', marginTop: '100px', fontSize: '2rem' }}>
+      Welcome! You are logged in.<br />
+      (Replace this with your real dashboard or home page)
+    </div>
+  );
+}
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      setIsScrolled(scrollTop > 40);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navigateToLogin = () => {
-    setCurrentPage("login");
-  };
-
-  const navigateToHome = () => {
-    setCurrentPage("home");
-  };
-
-  if (currentPage === "login") {
-    return <LoginPage onBack={navigateToHome} />;
-  }
-
+function HomePage() {
+  const navigate = useNavigate();
   return (
     <div className="app">
-      {/* Top Left Logo */}
-      <img src="/logo.png" alt="Clarifica Logo" className="top-left-logo" />
       {/* Top Right Buttons */}
-      <div className={`top-right-buttons ${isScrolled ? 'hidden' : ''}`}>
-        <button className="btn-secondary" onClick={navigateToLogin}>Log In</button>
-        <button className="btn-primary" onClick={navigateToLogin}>Sign Up</button>
+      <div className={`top-right-buttons`}>
+        <button className="btn-secondary" onClick={() => navigate('/login')}>Log In</button>
+        <button className="btn-primary" onClick={() => navigate('/login')}>Sign Up</button>
       </div>
-
       {/* Hero Section */}
       <section id="home" className="hero">
         <div className="hero-background">
@@ -72,20 +55,17 @@ function App() {
               Three powerful ways to find clarity and support in your life
             </p>
           </div>
-          
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon">🧠</div>
               <h3>AI Therapist</h3>
               <p>Access professional-level emotional support anytime, anywhere. Our AI therapist provides compassionate guidance, helps you process feelings, and offers evidence-based coping strategies for your mental well-being.</p>
             </div>
-            
             <div className="feature-card">
               <div className="feature-icon">💭</div>
               <h3>Safe Venting Space</h3>
               <p>Express your thoughts and emotions freely in a judgment-free environment. Our venting feature provides a secure space to release pent-up feelings, helping you process emotions and find emotional relief.</p>
             </div>
-            
             <div className="feature-card">
               <div className="feature-icon">🎯</div>
               <h3>Decision Making Support</h3>
@@ -143,7 +123,6 @@ function App() {
             <div className="contact-info">
               <h2>Get in Touch</h2>
               <p>Ready to start your journey to clarity and emotional well-being? Let's connect.</p>
-              
               <div className="contact-methods">
                 <div className="contact-method">
                   <div className="method-icon">📧</div>
@@ -152,7 +131,6 @@ function App() {
                     <p>support@clarifica.com</p>
                   </div>
                 </div>
-                
                 <div className="contact-method">
                   <div className="method-icon">📞</div>
                   <div>
@@ -160,7 +138,6 @@ function App() {
                     <p>+1 (555) 123-4567</p>
                   </div>
                 </div>
-                
                 <div className="contact-method">
                   <div className="method-icon">📍</div>
                   <div>
@@ -170,7 +147,6 @@ function App() {
                 </div>
               </div>
             </div>
-            
             <div className="contact-form">
               <form>
                 <div className="form-group">
@@ -202,7 +178,6 @@ function App() {
               </div>
               <p>Supporting your mental health journey with AI-powered clarity and compassion.</p>
             </div>
-            
             <div className="footer-section">
               <h4>Services</h4>
               <ul>
@@ -212,7 +187,6 @@ function App() {
                 <li><a href="#pricing">Pricing</a></li>
               </ul>
             </div>
-            
             <div className="footer-section">
               <h4>Company</h4>
               <ul>
@@ -222,7 +196,6 @@ function App() {
                 <li><a href="#press">Press</a></li>
               </ul>
             </div>
-            
             <div className="footer-section">
               <h4>Support</h4>
               <ul>
@@ -233,7 +206,6 @@ function App() {
               </ul>
             </div>
           </div>
-          
           <div className="footer-bottom">
             <p>&copy; 2024 Clarifica. All rights reserved.</p>
             <div className="social-links">
@@ -245,6 +217,45 @@ function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function AppRoutes() {
+  const [currentPage, setCurrentPage] = useState("home");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setIsScrolled(scrollTop > 40);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navigateToLogin = () => {
+    setCurrentPage("login");
+  };
+
+  const navigateToHome = () => {
+    setCurrentPage("home");
+  };
+
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 }
 

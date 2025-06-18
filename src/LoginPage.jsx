@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
-function LoginPage({ onBack }) {
+function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: "",
@@ -9,6 +10,7 @@ function LoginPage({ onBack }) {
     confirmPassword: "",
     name: ""
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setFormData({
@@ -20,7 +22,8 @@ function LoginPage({ onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission here
-    console.log("Form submitted:", formData);
+    // After successful login:
+    navigate("/dashboard");
   };
 
   return (
@@ -83,27 +86,25 @@ function LoginPage({ onBack }) {
             )}
 
             <div className="form-group">
-              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder="Enter your email"
+                placeholder="Email"
                 required
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                placeholder="Enter your password"
+                placeholder="Password"
                 required
               />
             </div>
@@ -158,7 +159,7 @@ function LoginPage({ onBack }) {
 
           {/* Back to Home */}
           <div className="back-home">
-            <button onClick={onBack} className="back-link">
+            <button onClick={() => navigate(-1)} className="back-link">
               ← Back to Home
             </button>
           </div>
