@@ -156,13 +156,6 @@ function LoginPage() {
               </button>
             </div>
           </div>
-
-          {/* Back to Home */}
-          <div className="back-home">
-            <button onClick={() => navigate(-1)} className="back-link">
-              ← Back to Home
-            </button>
-          </div>
         </div>
       </div>
     </div>
