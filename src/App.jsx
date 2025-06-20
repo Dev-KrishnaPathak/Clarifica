@@ -15,8 +15,19 @@ function Dashboard() {
 function HomePage() {
   const navigate = useNavigate();
 
-  // Static quote
-  const quote = "The next chapter in your life is called Alignment";
+  // Animated quote words
+  const animatedWords = ["Alignment", "Wellness", "Prosperity"];
+  const [wordIndex, setWordIndex] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % animatedWords.length);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, []);
+  const quote = [
+    "The next chapter in your life is called ",
+    <span key="animated-word" className="animated-quote-word">{animatedWords[wordIndex]}</span>
+  ];
 
   return (
     <div className="app">

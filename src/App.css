@@ -977,3 +977,23 @@ button:focus {
 #ai-therapist.features {
   background: #2f4753 !important;
 }
+
+.animated-quote-word {
+  display: inline-block;
+  animation: quoteLoopRotate 1.5s linear infinite;
+  color: #ffe066;
+}
+
+@keyframes quoteLoopRotate {
+  0% {
+    transform: rotate(0deg);
+    color: #ffe066;
+  }
+  50% {
+    color: #fff;
+  }
+  100% {
+    transform: rotate(360deg);
+    color: #ffe066;
+  }
+}
