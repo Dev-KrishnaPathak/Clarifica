@@ -52,7 +52,7 @@ function HomePage() {
               fontSize: '1.1rem',
               fontStyle: 'italic',
               textAlign: 'center',
-              marginTop: '1.5rem',
+              marginTop: '0.1rem',
               zIndex: 10
             }}>
               {quote}
