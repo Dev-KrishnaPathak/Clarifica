@@ -112,57 +112,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="contact">
-        <div className="container">
-          <div className="contact-content">
-            <div className="contact-info">
-              <h2>Get in Touch</h2>
-              <p>Ready to start your journey to clarity and emotional well-being? Let's connect.</p>
-              <div className="contact-methods">
-                <div className="contact-method">
-                  <div className="method-icon">📧</div>
-                  <div>
-                    <h4>Email</h4>
-                    <p>support@clarifica.com</p>
-                  </div>
-                </div>
-                <div className="contact-method">
-                  <div className="method-icon">📞</div>
-                  <div>
-                    <h4>Support Line</h4>
-                    <p>+1 (555) 123-4567</p>
-                  </div>
-                </div>
-                <div className="contact-method">
-                  <div className="method-icon">📍</div>
-                  <div>
-                    <h4>Office</h4>
-                    <p>123 Wellness Drive<br />Mental Health City, MH 12345</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="contact-form">
-              <form>
-                <div className="form-group">
-                  <input type="text" placeholder="Your Name" required />
-                </div>
-                <div className="form-group">
-                  <input type="email" placeholder="Your Email" required />
-                </div>
-                <div className="form-group">
-                  <textarea placeholder="How can we help you today?" rows="5" required></textarea>
-                </div>
-                <button type="submit" className="btn-primary btn-full">
-                  Send Message
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="footer">
         <div className="container">
