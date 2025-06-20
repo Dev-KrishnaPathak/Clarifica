@@ -18,15 +18,30 @@ function HomePage() {
   // Animated quote words
   const animatedWords = ["Alignment", "Wellness", "Prosperity"];
   const [wordIndex, setWordIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
   useEffect(() => {
+    setAnimating(true);
+    const timeout = setTimeout(() => setAnimating(false), 900); // animation duration
     const interval = setInterval(() => {
+      setAnimating(true);
+      setTimeout(() => setAnimating(false), 900);
       setWordIndex((prev) => (prev + 1) % animatedWords.length);
-    }, 1500);
-    return () => clearInterval(interval);
+    }, 1800);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, []);
+
   const quote = [
     "The next chapter in your life is called ",
-    <span key="animated-word" className="animated-quote-word">{animatedWords[wordIndex]}</span>
+    <span
+      key={animatedWords[wordIndex]}
+      className={`animated-quote-fancy-word${animating ? ' animating' : ''}`}
+    >
+      {animatedWords[wordIndex]}
+    </span>
   ];
 
   return (

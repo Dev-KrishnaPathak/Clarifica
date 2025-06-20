@@ -978,22 +978,80 @@ button:focus {
   background: #2f4753 !important;
 }
 
-.animated-quote-word {
+.animated-quote-loop-container {
   display: inline-block;
-  animation: quoteLoopRotate 1.5s linear infinite;
-  color: #ffe066;
+  height: 1.2em;
+  overflow: hidden;
+  vertical-align: bottom;
+  width: 7.5em;
+  position: relative;
+  text-align: center;
 }
 
-@keyframes quoteLoopRotate {
+.animated-quote-loop-word {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+  width: 100%;
+}
+
+.animated-quote-loop-item {
+  height: 1.2em;
+  color: #ffe066;
+  font-style: italic;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.2em;
+  background: none;
+  width: 100%;
+}
+
+.animated-quote-fade-word {
+  display: inline-block;
+  color: #ffe066;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.2em;
+  background: none;
+  transition: opacity 0.5s, transform 0.5s;
+  opacity: 1;
+  animation: fadeWordInOut 1.5s linear infinite;
+}
+
+@keyframes fadeWordInOut {
   0% {
-    transform: rotate(0deg);
-    color: #ffe066;
+    opacity: 0;
+    transform: translateY(10px);
   }
-  50% {
-    color: #fff;
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
   }
   100% {
-    transform: rotate(360deg);
-    color: #ffe066;
+    opacity: 0;
+    transform: translateY(-10px);
   }
+}
+
+.animated-quote-fancy-word {
+  display: inline-block;
+  color: #ffe066;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.2em;
+  background: none;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s, transform 0.5s;
+}
+.animated-quote-fancy-word.animating {
+  opacity: 0;
+  transform: translateY(-1.2em);
 }
