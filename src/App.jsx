@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import "./App.css";
 import LoginPage from "./LoginPage";
 
@@ -57,73 +58,143 @@ function HomePage() {
       </section>
 
       {/* Features Section - AI Therapist */}
-      <section id="ai-therapist" className="features">
+      <motion.section
+        id="ai-therapist"
+        className="features"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         <div className="container">
           <div className="about-content">
-            <div className="about-text">
+            <motion.div
+              className="about-text"
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+            >
               <h2>AI Therapist</h2>
               <p>
                 Access professional-level emotional support anytime, anywhere. Our AI therapist provides compassionate guidance, helps you process feelings, and offers evidence-based coping strategies for your mental well-being.
               </p>
-            </div>
-            <div className="about-visual">
+            </motion.div>
+            <motion.div
+              className="about-visual"
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
               <div className="about-image">
                 <div className="image-placeholder">
                   <img src="/therapy section.jpeg" alt="Therapy session" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Features Section - Safe Venting Space */}
-      <section id="safe-venting" className="features">
+      <motion.section
+        id="safe-venting"
+        className="features"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         <div className="container">
           <div className="about-content">
-            <div className="about-visual">
+            <motion.div
+              className="about-visual"
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+            >
               <div className="about-image">
                 <div className="image-placeholder">
                   <img src="/venting.jpeg" alt="Venting space" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               </div>
-            </div>
-            <div className="about-text">
+            </motion.div>
+            <motion.div
+              className="about-text"
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
               <h2>Safe Venting Space</h2>
               <p>
                 Express your thoughts and emotions freely in a judgment-free environment. Our venting feature provides a secure space to release pent-up feelings, helping you process emotions and find emotional relief.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Features Section - Decision Making Support */}
-      <section id="decision-support" className="features">
+      <motion.section
+        id="decision-support"
+        className="features"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         <div className="container">
           <div className="about-content">
-            <div className="about-text">
+            <motion.div
+              className="about-text"
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+            >
               <h2>Decision Making Support</h2>
               <p>
                 Navigate life's complex choices with confidence. Our AI analyzes your situation, considers multiple perspectives, and provides structured guidance to help you make informed decisions that align with your values.
               </p>
-            </div>
-            <div className="about-visual">
+            </motion.div>
+            <motion.div
+              className="about-visual"
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
               <div className="about-image">
                 <div className="image-placeholder">
                   <span>🎯</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* About Section */}
-      <section id="about" className="about">
+      <motion.section
+        id="about"
+        className="about"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         <div className="container">
           <div className="about-content">
-            <div className="about-text">
+            <motion.div
+              className="about-text"
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+            >
               <h2>About Clarifica</h2>
               <p>
                 We believe everyone deserves access to emotional support and clarity in their decision-making. 
@@ -134,17 +205,23 @@ function HomePage() {
                 Our AI-powered platform combines the best of therapeutic techniques, safe emotional expression, 
                 and cognitive decision-making frameworks to provide comprehensive support for your mental health journey.
               </p>
-            </div>
-            <div className="about-visual">
+            </motion.div>
+            <motion.div
+              className="about-visual"
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
               <div className="about-image">
                 <div className="image-placeholder">
                   <span>Mental Health Support</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
       <footer className="footer">
