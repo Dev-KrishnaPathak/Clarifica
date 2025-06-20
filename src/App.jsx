@@ -36,11 +36,13 @@ function HomePage() {
 
   const quote = [
     "The next chapter in your life is called ",
-    <span
-      key={animatedWords[wordIndex]}
-      className={`animated-quote-fancy-word${animating ? ' animating' : ''}`}
-    >
-      {animatedWords[wordIndex]}
+    <span className="animated-quote-fancy-word-wrapper" key="animated-word-wrapper">
+      <span
+        key={animatedWords[wordIndex]}
+        className={`animated-quote-fancy-word${animating ? ' animating' : ''}`}
+      >
+        {animatedWords[wordIndex]}
+      </span>
     </span>
   ];
 

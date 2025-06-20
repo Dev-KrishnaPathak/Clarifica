@@ -1039,7 +1039,19 @@ button:focus {
   }
 }
 
+.animated-quote-fancy-word-wrapper {
+  display: inline-block;
+  position: relative;
+  width: 5em;
+  min-width: 4em;
+  height: 1.2em;
+  vertical-align: middle;
+}
 .animated-quote-fancy-word {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
   display: inline-block;
   color: #ffe066;
   font-style: italic;
@@ -1050,6 +1062,7 @@ button:focus {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.5s, transform 0.5s;
+  text-align: center;
 }
 .animated-quote-fancy-word.animating {
   opacity: 0;
