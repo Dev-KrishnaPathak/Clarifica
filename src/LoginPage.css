@@ -55,7 +55,7 @@ html, body {
 .login-card {
   background: rgba(255, 255, 255, 0.025);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   padding: 28px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
