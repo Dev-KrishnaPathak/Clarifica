@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-import { motion, useViewportScroll, useTransform } from "framer-motion";
 import "./App.css";
 import LoginPage from "./LoginPage";
 
@@ -15,21 +14,9 @@ function Dashboard() {
 
 function HomePage() {
   const navigate = useNavigate();
-  const { scrollY } = useViewportScroll();
-  const [stuck, setStuck] = React.useState(false);
 
-  // Animate from 0px to 200px scroll
-  const progress = useTransform(scrollY, [0, 200], [0, 1]);
-  const scale = useTransform(progress, [0, 1], [1, 0.25]);
-  const x = useTransform(progress, [0, 1], [0, -window.innerWidth / 2 + 120]);
-  const y = useTransform(progress, [0, 1], [0, -window.innerHeight / 2 + 70]);
-
-  // Listen for scroll to set stuck state
-  useEffect(() => {
-    return scrollY.onChange((v) => {
-      setStuck(v > 200);
-    });
-  }, [scrollY]);
+  // Static quote
+  const quote = "The next chapter in your life is called Alignment";
 
   return (
     <div className="app">
@@ -54,45 +41,28 @@ function HomePage() {
           <div className="hero-overlay"></div>
         </div>
         <div className="hero-content">
-          <motion.div
-            className={`hero-text${stuck ? ' top-left-logo' : ''}`}
-            style={
-              stuck
-                ? {
-                    scale: 0.25,
-                    x: -window.innerWidth / 2 + 120,
-                    y: -window.innerHeight / 2 + 70,
-                    position: 'fixed',
-                    top: 32,
-                    left: 20,
-                    zIndex: 1100,
-                    originX: 0,
-                    originY: 0,
-                    pointerEvents: 'none',
-                  }
-                : {
-                    scale,
-                    x,
-                    y,
-                    position: 'relative',
-                    zIndex: 1100,
-                    originX: 0,
-                    originY: 0,
-                    pointerEvents: 'none',
-                  }
-            }
-            transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-          >
+          <div className="hero-text">
             <h1 className="hero-title" style={{margin: 0}}>
               <span className="title-c">C</span>
               <span className="title-rest">larifica</span>
             </h1>
-          </motion.div>
+            {/* Quote just below Clarifica */}
+            <div style={{
+              color: 'white',
+              fontSize: '1.1rem',
+              fontStyle: 'italic',
+              textAlign: 'center',
+              marginTop: '1.5rem',
+              zIndex: 10
+            }}>
+              {quote}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Features Section - AI Therapist */}
-      <motion.section
+      <section
         id="ai-therapist"
         className="features"
         initial={{ opacity: 0, y: 60 }}
@@ -102,7 +72,7 @@ function HomePage() {
       >
         <div className="container">
           <div className="about-content">
-            <motion.div
+            <div
               className="about-text"
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -113,8 +83,8 @@ function HomePage() {
               <p>
                 Access professional-level emotional support anytime, anywhere. Our AI therapist provides compassionate guidance, helps you process feelings, and offers evidence-based coping strategies for your mental well-being.
               </p>
-            </motion.div>
-            <motion.div
+            </div>
+            <div
               className="about-visual"
               initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -126,13 +96,13 @@ function HomePage() {
                   <img src="/therapy section.jpeg" alt="Therapy session" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Features Section - Safe Venting Space */}
-      <motion.section
+      <section
         id="safe-venting"
         className="features"
         initial={{ opacity: 0, y: 60 }}
@@ -142,7 +112,7 @@ function HomePage() {
       >
         <div className="container">
           <div className="about-content">
-            <motion.div
+            <div
               className="about-visual"
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -154,8 +124,8 @@ function HomePage() {
                   <img src="/venting.jpeg" alt="Venting space" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               </div>
-            </motion.div>
-            <motion.div
+            </div>
+            <div
               className="about-text"
               initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -166,13 +136,13 @@ function HomePage() {
               <p>
                 Express your thoughts and emotions freely in a judgment-free environment. Our venting feature provides a secure space to release pent-up feelings, helping you process emotions and find emotional relief.
               </p>
-            </motion.div>
+            </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Features Section - Decision Making Support */}
-      <motion.section
+      <section
         id="decision-support"
         className="features"
         initial={{ opacity: 0, y: 60 }}
@@ -182,7 +152,7 @@ function HomePage() {
       >
         <div className="container">
           <div className="about-content">
-            <motion.div
+            <div
               className="about-text"
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -193,8 +163,8 @@ function HomePage() {
               <p>
                 Navigate life's complex choices with confidence. Our AI analyzes your situation, considers multiple perspectives, and provides structured guidance to help you make informed decisions that align with your values.
               </p>
-            </motion.div>
-            <motion.div
+            </div>
+            <div
               className="about-visual"
               initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -206,13 +176,13 @@ function HomePage() {
                   <span>🎯</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* About Section */}
-      <motion.section
+      <section
         id="about"
         className="about"
         initial={{ opacity: 0, y: 60 }}
@@ -222,7 +192,7 @@ function HomePage() {
       >
         <div className="container">
           <div className="about-content">
-            <motion.div
+            <div
               className="about-text"
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -239,8 +209,8 @@ function HomePage() {
                 Our AI-powered platform combines the best of therapeutic techniques, safe emotional expression, 
                 and cognitive decision-making frameworks to provide comprehensive support for your mental health journey.
               </p>
-            </motion.div>
-            <motion.div
+            </div>
+            <div
               className="about-visual"
               initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -252,10 +222,10 @@ function HomePage() {
                   <span>Mental Health Support</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Footer */}
       <footer className="footer">

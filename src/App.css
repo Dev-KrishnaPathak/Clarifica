@@ -159,20 +159,20 @@ body {
 }
 
 .btn-secondary {
-  background: transparent;
-  color: var(--button-text);
-  border: 1px solid var(--button-bg);
+  background: transparent !important;
+  color: white;
+  border: 1px solid white;
   padding: 10px 22px;
-  border-radius: 8px;
+  border-radius: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-  border-color: black;
-  background: var(--button-bg);
-  color: var(--button-text);
+  border-color: #fff;
+  background: transparent !important;
+  color: #fff;
 }
 
 .btn-outline {
@@ -299,7 +299,7 @@ body {
 
 .hero-title {
   font-family: 'Bacasime Antique';
-  font-size: 8rem;
+  font-size: 10rem;
   font-weight: 400;
   line-height: 1;
   color: white;
@@ -851,7 +851,7 @@ body {
 /* Responsive Design */
 @media (max-width: 1024px) {
   .hero-title {
-    font-size: 5rem;
+    font-size: 6rem;
   }
   .logo-image {
     height: 0.8em;
@@ -888,7 +888,7 @@ body {
     padding: 0 16px;
   }
   .hero-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     gap: 0em;
     font-family: 'Bacasime Antique', 'Times New Roman', Times, serif;
   }
@@ -964,7 +964,7 @@ button:focus {
 /* Override any remaining white backgrounds */
 .about-image,
 .btn-primary,
-.btn-secondary,
+/* .btn-secondary, */
 .feature-card,
 .footer,
 .section-header,
