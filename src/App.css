@@ -5,11 +5,33 @@
   box-sizing: border-box;
 }
 
+/* Peaceful color palette update */
+:root {
+  --primary-bg: #e3f2fd; /* Soft blue */
+  --secondary-bg: #e3f2fd;
+  --accent-bg: #eafaf1;
+  --primary-color: #3a5a6c;
+  --secondary-color: #5a837a;
+  --accent-color: #7fc8a9;
+  --button-bg: #b3e5fc;
+  --button-hover-bg: #81d4fa;
+  --button-text: #25636b;
+  --section-bg: #f6fbfc;
+  --footer-bg: #e3f2fd;
+  --footer-text: #3a5a6c;
+}
+
+body {
+  background-color: var(--primary-bg) !important;
+  color: var(--primary-color);
+}
+
 .app {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
-  color: #333;
+  color: var(--primary-color);
   overflow-x: hidden;
+  background: var(--primary-bg) !important;
 }
 
 .container {
@@ -117,8 +139,8 @@
 
 /* Buttons */
 .btn-primary {
-  background: white;
-  color: black;
+  background: var(--button-bg);
+  color: var(--button-text);
   border: none;
   padding: 12px 24px;
   border-radius: 8px;
@@ -133,13 +155,13 @@
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
-  background: #f8fafc;
+  background: var(--button-hover-bg);
 }
 
 .btn-secondary {
   background: transparent;
-  color: white;
-  border: 1px solid white;
+  color: var(--button-text);
+  border: 1px solid var(--button-bg);
   padding: 10px 22px;
   border-radius: 8px;
   font-weight: 600;
@@ -149,8 +171,8 @@
 
 .btn-secondary:hover {
   border-color: black;
-  background: black;
-  color: white;
+  background: var(--button-bg);
+  color: var(--button-text);
 }
 
 .btn-outline {
@@ -495,7 +517,7 @@
 /* Features Section */
 .features {
   padding: 100px 0;
-  background: #f8fafc;
+  background: var(--section-bg);
 }
 
 .section-header {
@@ -506,13 +528,13 @@
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--secondary-color);
   margin-bottom: 16px;
 }
 
 .section-subtitle {
   font-size: 1.125rem;
-  color: #6b7280;
+  color: var(--primary-color);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -585,7 +607,7 @@
 /* About Section */
 .about {
   padding: 100px 0;
-  background: white;
+  background: var(--section-bg);
 }
 
 .about-content {
@@ -598,12 +620,12 @@
 .about-text h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--secondary-color);
   margin-bottom: 24px;
 }
 
 .about-text p {
-  color: #6b7280;
+  color: var(--primary-color);
   line-height: 1.7;
   margin-bottom: 24px;
   font-size: 1.125rem;
@@ -642,19 +664,25 @@
 .image-placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #e3f2fd, #eafaf1);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--secondary-color);
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+.about-text {
+  background: var(--secondary-bg);
+  border-radius: 16px;
+  padding: 32px;
 }
 
 /* Contact Section */
 .contact {
   padding: 100px 0;
-  background: #f8fafc;
+  background: var(--section-bg);
 }
 
 .contact-content {
@@ -666,12 +694,12 @@
 .contact-info h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--secondary-color);
   margin-bottom: 16px;
 }
 
 .contact-info > p {
-  color: #6b7280;
+  color: var(--primary-color);
   font-size: 1.125rem;
   margin-bottom: 48px;
 }
@@ -746,8 +774,8 @@
 
 /* Footer */
 .footer {
-  background: #1f2937;
-  color: white;
+  background: var(--footer-bg);
+  color: var(--footer-text);
   padding: 60px 0 20px;
 }
 
@@ -769,7 +797,7 @@
 .footer-section h4 {
   font-weight: 600;
   margin-bottom: 20px;
-  color: #f9fafb;
+  color: var(--secondary-color);
 }
 
 .footer-section ul {
@@ -781,13 +809,13 @@
 }
 
 .footer-section ul li a {
-  color: #d1d5db;
+  color: var(--primary-color);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer-section ul li a:hover {
-  color: #2563eb;
+  color: var(--accent-color);
 }
 
 .footer-section p {
@@ -801,7 +829,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #9ca3af;
+  color: var(--footer-text);
 }
 
 .social-links {
@@ -930,4 +958,17 @@ button:focus {
 
 #safe-venting .about-image {
   width: 540px;
+}
+
+/* Override any remaining white backgrounds */
+.about-image,
+.btn-primary,
+.btn-secondary,
+.feature-card,
+.footer,
+.section-header,
+.about,
+.features,
+.contact {
+  background: var(--primary-bg) !important;
 }
