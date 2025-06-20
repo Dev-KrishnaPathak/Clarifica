@@ -633,7 +633,7 @@
 }
 
 .about-image {
-  width: 400px;
+  width: 540px;
   height: 300px;
   border-radius: 16px;
   overflow: hidden;
@@ -926,4 +926,8 @@ html {
 button:focus {
   outline: none;
   box-shadow: none;
+}
+
+#safe-venting .about-image {
+  width: 540px;
 }

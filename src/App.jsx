@@ -56,30 +56,64 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="features">
+      {/* Features Section - AI Therapist */}
+      <section id="ai-therapist" className="features">
         <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Our Core Services</h2>
-            <p className="section-subtitle">
-              Three powerful ways to find clarity and support in your life
-            </p>
+          <div className="about-content">
+            <div className="about-text">
+              <h2>AI Therapist</h2>
+              <p>
+                Access professional-level emotional support anytime, anywhere. Our AI therapist provides compassionate guidance, helps you process feelings, and offers evidence-based coping strategies for your mental well-being.
+              </p>
+            </div>
+            <div className="about-visual">
+              <div className="about-image">
+                <div className="image-placeholder">
+                  <span>🧠</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">🧠</div>
-              <h3>AI Therapist</h3>
-              <p>Access professional-level emotional support anytime, anywhere. Our AI therapist provides compassionate guidance, helps you process feelings, and offers evidence-based coping strategies for your mental well-being.</p>
+        </div>
+      </section>
+
+      {/* Features Section - Safe Venting Space */}
+      <section id="safe-venting" className="features">
+        <div className="container">
+          <div className="about-content">
+            <div className="about-visual">
+              <div className="about-image">
+                <div className="image-placeholder">
+                  <span>💭</span>
+                </div>
+              </div>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">💭</div>
-              <h3>Safe Venting Space</h3>
-              <p>Express your thoughts and emotions freely in a judgment-free environment. Our venting feature provides a secure space to release pent-up feelings, helping you process emotions and find emotional relief.</p>
+            <div className="about-text">
+              <h2>Safe Venting Space</h2>
+              <p>
+                Express your thoughts and emotions freely in a judgment-free environment. Our venting feature provides a secure space to release pent-up feelings, helping you process emotions and find emotional relief.
+              </p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">🎯</div>
-              <h3>Decision Making Support</h3>
-              <p>Navigate life's complex choices with confidence. Our AI analyzes your situation, considers multiple perspectives, and provides structured guidance to help you make informed decisions that align with your values.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section - Decision Making Support */}
+      <section id="decision-support" className="features">
+        <div className="container">
+          <div className="about-content">
+            <div className="about-text">
+              <h2>Decision Making Support</h2>
+              <p>
+                Navigate life's complex choices with confidence. Our AI analyzes your situation, considers multiple perspectives, and provides structured guidance to help you make informed decisions that align with your values.
+              </p>
+            </div>
+            <div className="about-visual">
+              <div className="about-image">
+                <div className="image-placeholder">
+                  <span>🎯</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
