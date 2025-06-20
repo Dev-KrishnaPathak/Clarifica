@@ -37,7 +37,7 @@ function LoginPage() {
           playsInline
           className="login-video"
         >
-          <source src="/waves.mp4" type="video/mp4" />
+          <source src="/Second.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="login-overlay"></div>
@@ -70,21 +70,6 @@ function LoginPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="login-form">
-            {!isLogin && (
-              <div className="form-group">
-                <label htmlFor="name">Full Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Enter your full name"
-                  required={!isLogin}
-                />
-              </div>
-            )}
-
             <div className="form-group">
               <input
                 type="email"
@@ -108,21 +93,6 @@ function LoginPage() {
                 required
               />
             </div>
-
-            {!isLogin && (
-              <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  placeholder="Confirm your password"
-                  required={!isLogin}
-                />
-              </div>
-            )}
 
             {isLogin && (
               <div className="form-options">

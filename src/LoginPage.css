@@ -8,6 +8,10 @@
   overflow: hidden;
 }
 
+html, body {
+  overflow: hidden;
+}
+
 /* Background Video */
 .login-background {
   position: absolute;
@@ -53,8 +57,9 @@
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  padding: 40px;
+  padding: 28px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  min-height: 370px;
 }
 
 /* Logo */
@@ -325,4 +330,8 @@
   .submit-btn {
     padding: 14px;
   }
+}
+
+.login-form .form-group:last-of-type {
+  margin-bottom: 60px;
 } 
