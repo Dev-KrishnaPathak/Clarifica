@@ -100,20 +100,6 @@ function HomePage() {
                 Our AI-powered platform combines the best of therapeutic techniques, safe emotional expression, 
                 and cognitive decision-making frameworks to provide comprehensive support for your mental health journey.
               </p>
-              <div className="stats">
-                <div className="stat">
-                  <h3>50K+</h3>
-                  <p>Users Supported</p>
-                </div>
-                <div className="stat">
-                  <h3>24/7</h3>
-                  <p>Availability</p>
-                </div>
-                <div className="stat">
-                  <h3>95%</h3>
-                  <p>Satisfaction Rate</p>
-                </div>
-              </div>
             </div>
             <div className="about-visual">
               <div className="about-image">
