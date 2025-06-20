@@ -14,10 +14,20 @@ function Dashboard() {
 
 function HomePage() {
   const navigate = useNavigate();
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="app">
       {/* Top Right Buttons */}
-      <div className={`top-right-buttons`}>
+      <div className={`top-right-buttons${isScrolled ? ' hidden' : ''}`}>
         <button className="btn-secondary" onClick={() => navigate('/login')}>Log In</button>
         <button className="btn-primary" onClick={() => navigate('/login')}>Sign Up</button>
       </div>
