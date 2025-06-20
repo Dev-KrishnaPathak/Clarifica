@@ -69,7 +69,7 @@ function HomePage() {
             <div className="about-visual">
               <div className="about-image">
                 <div className="image-placeholder">
-                  <span>🧠</span>
+                  <img src="/therapy session.jpg" alt="Therapy session" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               </div>
             </div>
