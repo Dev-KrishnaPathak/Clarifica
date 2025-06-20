@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useViewportScroll, useTransform } from "framer-motion";
 import "./App.css";
 import LoginPage from "./LoginPage";
 
@@ -15,20 +15,26 @@ function Dashboard() {
 
 function HomePage() {
   const navigate = useNavigate();
-  const [isScrolled, setIsScrolled] = React.useState(false);
+  const { scrollY } = useViewportScroll();
+  const [stuck, setStuck] = React.useState(false);
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Animate from 0px to 200px scroll
+  const progress = useTransform(scrollY, [0, 200], [0, 1]);
+  const scale = useTransform(progress, [0, 1], [1, 0.25]);
+  const x = useTransform(progress, [0, 1], [0, -window.innerWidth / 2 + 120]);
+  const y = useTransform(progress, [0, 1], [0, -window.innerHeight / 2 + 70]);
+
+  // Listen for scroll to set stuck state
+  useEffect(() => {
+    return scrollY.onChange((v) => {
+      setStuck(v > 200);
+    });
+  }, [scrollY]);
 
   return (
     <div className="app">
       {/* Top Right Buttons */}
-      <div className={`top-right-buttons${isScrolled ? ' hidden' : ''}`}>
+      <div className={`top-right-buttons`}>
         <button className="btn-secondary" onClick={() => navigate('/login')}>Log In</button>
         <button className="btn-primary" onClick={() => navigate('/login')}>Sign Up</button>
       </div>
@@ -48,12 +54,40 @@ function HomePage() {
           <div className="hero-overlay"></div>
         </div>
         <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-title">
+          <motion.div
+            className={`hero-text${stuck ? ' top-left-logo' : ''}`}
+            style={
+              stuck
+                ? {
+                    scale: 0.25,
+                    x: -window.innerWidth / 2 + 120,
+                    y: -window.innerHeight / 2 + 70,
+                    position: 'fixed',
+                    top: 32,
+                    left: 20,
+                    zIndex: 1100,
+                    originX: 0,
+                    originY: 0,
+                    pointerEvents: 'none',
+                  }
+                : {
+                    scale,
+                    x,
+                    y,
+                    position: 'relative',
+                    zIndex: 1100,
+                    originX: 0,
+                    originY: 0,
+                    pointerEvents: 'none',
+                  }
+            }
+            transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+          >
+            <h1 className="hero-title" style={{margin: 0}}>
               <span className="title-c">C</span>
               <span className="title-rest">larifica</span>
             </h1>
-          </div>
+          </motion.div>
         </div>
       </section>
 
