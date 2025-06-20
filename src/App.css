@@ -1050,7 +1050,7 @@ button:focus {
 .animated-quote-fancy-word {
   position: absolute;
   left: 0;
-  top: -1px;
+  top: -2px;
   width: 100%;
   display: inline-block;
   color: #294862;
