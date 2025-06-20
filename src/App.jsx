@@ -22,12 +22,12 @@ function HomePage() {
 
   useEffect(() => {
     setAnimating(true);
-    const timeout = setTimeout(() => setAnimating(false), 900); // animation duration
+    const timeout = setTimeout(() => setAnimating(false), 1500); // animation duration
     const interval = setInterval(() => {
       setAnimating(true);
-      setTimeout(() => setAnimating(false), 900);
+      setTimeout(() => setAnimating(false), 1500);
       setWordIndex((prev) => (prev + 1) % animatedWords.length);
-    }, 1800);
+    }, 3500);
     return () => {
       clearInterval(interval);
       clearTimeout(timeout);
