@@ -216,8 +216,13 @@ function HomePage() {
             }}
             ref={buttonRef}
           >
-            <span
+            <video
               className="center-hero-btn-fill"
+              src="/waves.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
               style={{
                 position: 'absolute',
                 top: 0,
@@ -225,9 +230,10 @@ function HomePage() {
                 bottom: 0,
                 width: expandButton ? '100%' : `${progress}%`,
                 height: expandButton ? '100%' : '100%',
-                background: '#fff',
+                objectFit: 'cover',
                 zIndex: 1,
                 transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1), height 1.6s cubic-bezier(0.22, 1, 0.36, 1)',
+                pointerEvents: 'none',
               }}
             />
             <span
