@@ -161,7 +161,7 @@ function HomePage() {
               borderRadius: '0px',
               left: 0,
               top: 0,
-              transition: 'width 0.8s cubic-bezier(0.4,0,0.2,1), height 0.8s cubic-bezier(0.4,0,0.2,1), border-radius 0.8s cubic-bezier(0.4,0,0.2,1), left 0.8s cubic-bezier(0.4,0,0.2,1), top 0.8s cubic-bezier(0.4,0,0.2,1)',
+              transition: 'width 1.5s cubic-bezier(0.4,0,0.2,1), height 1.5s cubic-bezier(0.4,0,0.2,1), border-radius 1.5s cubic-bezier(0.4,0,0.2,1), left 1.5s cubic-bezier(0.4,0,0.2,1), top 1.5s cubic-bezier(0.4,0,0.2,1)',
             });
           }, 10);
         }
@@ -201,7 +201,7 @@ function HomePage() {
               justifyContent: 'center',
               background: 'transparent',
               overflow: 'hidden',
-              transition: overlayStyle.transition || 'width 0.8s cubic-bezier(0.4,0,0.2,1), height 0.8s cubic-bezier(0.4,0,0.2,1), border-radius 0.8s cubic-bezier(0.4,0,0.2,1)',
+              transition: overlayStyle.transition || 'width 1.5s cubic-bezier(0.4,0,0.2,1), height 1.5s cubic-bezier(0.4,0,0.2,1), border-radius 1.5s cubic-bezier(0.4,0,0.2,1), left 1.5s cubic-bezier(0.4,0,0.2,1), top 1.5s cubic-bezier(0.4,0,0.2,1)',
             }}
           >
             <video
