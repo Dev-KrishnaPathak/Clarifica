@@ -183,7 +183,7 @@ function HomePage() {
             }}
           >
             <video
-              src="/third.mp4"
+              src="/Second.mp4"
               autoPlay
               muted
               loop
