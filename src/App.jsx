@@ -116,6 +116,12 @@ function HomePage() {
   // Fill animation state
   const [progress, setProgress] = useState(0);
   const [startFill, setStartFill] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [overlayActive, setOverlayActive] = useState(false);
+  const buttonRef = useRef(null);
+  const [overlayDims, setOverlayDims] = useState({ size: 0, left: 0, top: 0 });
+  const [expandButton, setExpandButton] = useState(false);
+
   useEffect(() => {
     // Wait for last letter fade-in (1.1s delay + 0.6s duration) + 0.5s extra = 2.2s
     const fillTimeout = setTimeout(() => setStartFill(true), 2200);
@@ -128,15 +134,88 @@ function HomePage() {
     }, 30);
     return () => clearInterval(interval);
   }, [startFill]);
+  useEffect(() => {
+    if (progress === 100) {
+      setTimeout(() => {
+        setShowOverlay(true);
+        setTimeout(() => setOverlayActive(true), 10); // trigger scale animation
+      }, 500);
+    }
+  }, [progress]);
+  useEffect(() => {
+    if (showOverlay && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const size = Math.max(vw, vh) * 2; // large enough to cover
+      setOverlayDims({
+        size,
+        left: rect.left + rect.width / 2 - size / 2,
+        top: rect.top + rect.height / 2 - size / 2,
+      });
+    }
+  }, [showOverlay]);
+  useEffect(() => {
+    if (progress === 100) {
+      setTimeout(() => setExpandButton(true), 500);
+    }
+  }, [progress]);
 
   return (
     <div className="app">
-      {/* Top Right Buttons */}
-      {/* Removed Log In and Sign Up buttons */}
-      {/* Hero Section */}
+      {showOverlay && (
+        <div
+          className={`white-fill-overlay${overlayActive ? ' active' : ''}`}
+          style={{
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 3000,
+            pointerEvents: 'none',
+            background: 'transparent',
+            transition: 'background 0.5s',
+          }}
+        >
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'fixed',
+              left: overlayDims.left,
+              top: overlayDims.top,
+              width: overlayDims.size,
+              height: overlayDims.size,
+              borderRadius: '50%',
+              background: '#fff',
+              willChange: 'transform',
+              transition: 'transform 2.5s cubic-bezier(0.22, 1, 0.36, 1)',
+              transform: overlayActive ? 'scale(1)' : 'scale(0)',
+              boxSizing: 'border-box',
+              pointerEvents: 'none',
+              zIndex: 4000,
+            }}
+          />
+        </div>
+      )}
       <section id="home" className="hero">
         <div className="hero-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <button className="center-hero-btn" style={{ position: 'relative', overflow: 'hidden' }}>
+          <button
+            className="center-hero-btn"
+            style={{
+              position: 'relative',
+              overflow: 'hidden',
+              width: expandButton ? '100%' : '',
+              height: expandButton ? '100%' : '',
+              maxWidth: expandButton ? '100%' : '',
+              maxHeight: expandButton ? '100%' : '',
+              borderRadius: expandButton ? '0px' : '50px',
+              transition: 'width 1.6s cubic-bezier(0.22, 1, 0.36, 1), height 1.6s cubic-bezier(0.22, 1, 0.36, 1), border-radius 1.6s cubic-bezier(0.22, 1, 0.36, 1)',
+              zIndex: expandButton ? 4000 : 'auto',
+              background: '#fff',
+            }}
+            ref={buttonRef}
+          >
             <span
               className="center-hero-btn-fill"
               style={{
@@ -144,10 +223,11 @@ function HomePage() {
                 top: 0,
                 left: 0,
                 bottom: 0,
-                width: `${progress}%`,
+                width: expandButton ? '100%' : `${progress}%`,
+                height: expandButton ? '100%' : '100%',
                 background: '#fff',
                 zIndex: 1,
-                transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1)',
+                transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1), height 1.6s cubic-bezier(0.22, 1, 0.36, 1)',
               }}
             />
             <span
@@ -156,7 +236,8 @@ function HomePage() {
                 position: 'relative',
                 zIndex: 2,
                 color: `rgb(${255 - Math.round(progress * 2.55)}, ${255 - Math.round(progress * 2.55)}, ${255 - Math.round(progress * 2.55)})`,
-                transition: 'color 0.3s',
+                transition: 'color 0.3s, opacity 0.5s',
+                opacity: expandButton ? 0 : 1,
               }}>
               {Array.from('Clarifica').map((char, i) => (
                 <span className="center-hero-btn-letter" key={i}>{char}</span>
