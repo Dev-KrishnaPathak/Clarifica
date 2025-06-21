@@ -26,14 +26,14 @@ function HomePage() {
     },
     {
       id: 'safe-venting',
-      imgSrc: '/venting.jpeg',
+      imgSrc: '/vent-tile.jpeg',
       imgAlt: 'Safe Venting',
       title: 'Safe Venting Space',
       meta: 'Expression • 3 min',
     },
     {
       id: 'decision-support',
-      imgSrc: '/Decision-tile.jpeg',
+      imgSrc: '/decision-tile.jpeg',
       imgAlt: 'Decision Support',
       title: 'Decision Making Support',
       meta: 'Clarity • 4 min',
