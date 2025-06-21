@@ -1,0 +1,85 @@
+.tiles-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 550px; /* Original height for the scroll area */
+    transition: height 0.6s ease-in-out;
+}
+
+.tiles-container.content-visible {
+    height: 950px; /* Expanded height to fit content */
+}
+
+.selected-tile-content-wrapper {
+    position: absolute;
+    top: 500px;
+    left: 50%;
+    transform: translateX(-50%) translateY(50px);
+    width: 100%;
+    max-width: 800px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.6s ease-in-out;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.selected-tile-content-wrapper.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.selected-tile-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.selected-tile-content h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 24px;
+}
+
+.selected-tile-content p {
+    font-size: 1.125rem;
+    color: var(--primary-color);
+    line-height: 1.7;
+    margin-bottom: 32px;
+}
+
+.selected-tile-content button {
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.selected-tile-content button:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-2px);
+}
+
+.blog-tile.is-selected {
+  box-shadow: 0 0 0 3px var(--accent-color), 0 10px 30px rgba(0,0,0,0.2);
+  transform: scale(1.05) !important;
+}
+
+/* Cleanup previous styles */
+.tiles-container.revealed .circular-scroll-wrapper {
+    display: block; /* Revert change */
+    flex-direction: unset;
+    align-items: unset;
+}
+.blog-tile.selected {
+    position: absolute !important; /* Revert change */
+}

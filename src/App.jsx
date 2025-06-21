@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import LoginPage from "./LoginPage";
+import Perspectives from "./Perspectives";
 
 function LoadingBar({ progress }) {
   return (
@@ -31,6 +32,7 @@ function HomePage() {
       imgAlt: 'AI Therapist',
       title: 'AI Therapist',
       meta: 'Mindset • 2 min',
+      content: 'Our AI Therapist offers a conversational approach to mental wellness, providing insights and exercises based on Cognitive Behavioral Therapy. It helps you identify and challenge negative thought patterns in a safe, non-judgmental environment.'
     },
     {
       id: 'safe-venting',
@@ -38,6 +40,7 @@ function HomePage() {
       imgAlt: 'Safe Venting',
       title: 'Safe Venting Space',
       meta: 'Expression • 3 min',
+      content: 'A private and secure space for you to express your thoughts and feelings without fear of judgment. Venting can be a powerful tool for emotional release and self-reflection. Our platform ensures your data is encrypted and confidential.'
     },
     {
       id: 'decision-support',
@@ -45,20 +48,11 @@ function HomePage() {
       imgAlt: 'Decision Support',
       title: 'Decision Making Support',
       meta: 'Clarity • 4 min',
+      content: 'Struggling with a tough choice? Our decision support tool uses structured frameworks to help you weigh pros and cons, consider different perspectives, and gain clarity on your options. Make choices that align with your values and goals.'
     },
   ];
 
   const [tiles] = useState(initialTiles);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const intervalIdRef = useRef(null);
-
-  // Automatic tile loop effect
-  useEffect(() => {
-    intervalIdRef.current = setInterval(() => {
-      setCurrentIndex(prevIndex => (prevIndex + 1) % tiles.length);
-    }, 3000);
-    return () => clearInterval(intervalIdRef.current);
-  }, [tiles.length]);
 
   // Animated quote words
   const animatedWords = ["Alignment", "Wellness", "Prosperity"];
@@ -299,56 +293,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Blog Tiles Section */}
-      <section className="blog-tiles-section">
-        <div className="container tiles-container">
-          <div className="circular-scroll-wrapper">
-            {tiles.map((tile, index) => {
-              const offset = (index - currentIndex + tiles.length) % tiles.length;
-              let style = {
-                backgroundImage: `url(${tile.imgSrc})`,
-              };
-
-              let transform = '';
-              let opacity = 0;
-              let zIndex = 0;
-              if (offset === 0) {
-                transform = 'translateX(0) scale(1)';
-                opacity = 1;
-                zIndex = 2;
-              } else if (offset === 1) {
-                transform = 'translateX(120px) scale(0.8)';
-                opacity = 0.5;
-                zIndex = 1;
-              } else if (offset === tiles.length - 1) {
-                transform = 'translateX(-120px) scale(0.8)';
-                opacity = 0.5;
-                zIndex = 1;
-              }
-
-              style = {
-                ...style,
-                transform,
-                opacity,
-                zIndex,
-                pointerEvents: 'none',
-              };
-              
-              return (
-                <div className="blog-tile" key={tile.id} style={style}>
-                  <div className="tile-content">
-                    <h3>{tile.title}</h3>
-                    <div className="tile-meta">
-                      <p>{tile.meta}</p>
-                      <span className="tile-arrow">↗</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <Perspectives tiles={tiles} />
 
       {/* About Section */}
       <section
