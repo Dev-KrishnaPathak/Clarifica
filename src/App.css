@@ -250,36 +250,14 @@ body {
   align-items: center;
   position: relative;
   overflow: hidden;
+  background: #000 !important;
 }
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.hero-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
-
+/* Remove hero background and overlay styles */
+.hero-background,
+.hero-video,
 .hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 2;
+  display: none !important;
 }
 
 .hero-content {
@@ -1083,7 +1061,12 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 550px; /* Increased from 450px */
+  height: 550px; /* Set a fixed height for the scroll area */
+  transition: height 0.8s ease-in-out;
+}
+
+.tiles-container.revealed {
+  height: 1400px; /* Adjusted height to fit all revealed tiles */
 }
 
 .circular-scroll-wrapper {
@@ -1091,8 +1074,6 @@ button:focus {
   width: 100%;
   max-width: 400px; /* Adjusted to give side tiles more space */
   height: 100%;
-  transform: translateY(-8px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.03), 0 15px 30px rgba(0,0,0,0.08);
 }
 
 .blog-tile {
@@ -1100,7 +1081,7 @@ button:focus {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0,0,0,0.02), 0 10px 20px rgba(0,0,0,0.05);
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease-in-out;
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   text-decoration: none;
   color: inherit;
   display: flex;
@@ -1110,9 +1091,19 @@ button:focus {
   width: 100%;
   top: 0;
   left: 0;
-  height: 100%; /* Fill the container */
+  height: 400px; /* Explicit height for better transition */
   background-size: cover;
   background-position: center;
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tiles-container.revealed .blog-tile {
+  position: relative;
+  height: 400px;
+  margin-bottom: 40px;
+  transform: none !important;
+  opacity: 1 !important;
+  z-index: 1 !important;
 }
 
 .blog-tile:hover {
@@ -1157,4 +1148,42 @@ button:focus {
 .blog-tile:hover .tile-arrow {
   transform: translateX(3px) translateY(-3px);
   color: white;
+}
+
+.all-features-container {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease-in-out;
+}
+
+.all-features-container.visible {
+  max-height: 2000px; /* Large enough to fit the content */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.center-hero-btn {
+  padding: 20px 96px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  background: transparent !important;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 50px;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, border-color 0.3s;
+}
+.center-hero-btn:hover {
+  background: transparent !important;
+  border-color: #fff;
+  transform: none;
+}
+
+.center-hero-btn-fill {
+  height: 100%;
+  border-radius: 50px;
+  pointer-events: none;
 }

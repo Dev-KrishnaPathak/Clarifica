@@ -3,6 +3,14 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-route
 import "./App.css";
 import LoginPage from "./LoginPage";
 
+function LoadingBar({ progress }) {
+  return (
+    <div className="loading-bar-container">
+      <div className="loading-bar" style={{ width: `${progress}%` }}></div>
+    </div>
+  );
+}
+
 function Dashboard() {
   return (
     <div style={{ color: '#222', textAlign: 'center', marginTop: '100px', fontSize: '2rem' }}>
@@ -42,14 +50,37 @@ function HomePage() {
 
   const [tiles] = useState(initialTiles);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const intervalIdRef = useRef(null);
 
+  // Automatic tile loop effect
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex(prevIndex => (prevIndex + 1) % tiles.length);
-    }, 3000); // Change tile every 3 seconds
+    // Only run the interval if the view is not revealed
+    if (!isRevealed) {
+      intervalIdRef.current = setInterval(() => {
+        setCurrentIndex(prevIndex => (prevIndex + 1) % tiles.length);
+      }, 3000);
+    } else {
+      // If it is revealed, clear any existing interval
+      clearInterval(intervalIdRef.current);
+    }
+    // Cleanup function
+    return () => clearInterval(intervalIdRef.current);
+  }, [tiles.length, isRevealed]);
 
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, [tiles.length]);
+  // Scroll listener to reveal the linear layout
+  useEffect(() => {
+    const handleRevealScroll = () => {
+      setIsRevealed(true);
+    };
+
+    // Add the event listener to fire only once
+    window.addEventListener('wheel', handleRevealScroll, { once: true });
+
+    return () => {
+      window.removeEventListener('wheel', handleRevealScroll, { once: true });
+    };
+  }, []);
 
   // Animated quote words
   const animatedWords = ["Alignment", "Wellness", "Prosperity"];
@@ -82,218 +113,98 @@ function HomePage() {
     </span>
   ];
 
+  // Fill animation state
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setProgress((prev) => (prev < 100 ? prev + 1 : 100));
+    }, 30);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="app">
       {/* Top Right Buttons */}
-      <div className={`top-right-buttons`}>
-        <button className="btn-secondary" onClick={() => navigate('/login')}>Log In</button>
-        <button className="btn-primary" onClick={() => navigate('/login')}>Sign Up</button>
-      </div>
+      {/* Removed Log In and Sign Up buttons */}
       {/* Hero Section */}
       <section id="home" className="hero">
-        <div className="hero-background">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="hero-video"
-          >
-            <source src="/third.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          <div className="hero-overlay"></div>
-        </div>
-        <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-title" style={{margin: 0}}>
-              <span className="title-c">C</span>
-              <span className="title-rest">larifica</span>
-            </h1>
-            {/* Quote just below Clarifica */}
-            <div style={{
-              color: 'white',
-              fontSize: '1.1rem',
-              fontStyle: 'italic',
-              textAlign: 'center',
-              marginTop: '0.1rem',
-              zIndex: 10
+        <div className="hero-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <button className="center-hero-btn" style={{ position: 'relative', overflow: 'hidden' }}>
+            <span
+              className="center-hero-btn-fill"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                bottom: 0,
+                width: `${progress}%`,
+                background: '#fff',
+                zIndex: 1,
+                transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1)',
+              }}
+            />
+            <span style={{
+              position: 'relative',
+              zIndex: 2,
+              color: `rgb(${255 - Math.round(progress * 2.55)}, ${255 - Math.round(progress * 2.55)}, ${255 - Math.round(progress * 2.55)})`,
+              transition: 'color 0.3s',
             }}>
-              {quote}
-            </div>
-          </div>
+              Clarifica
+            </span>
+          </button>
         </div>
       </section>
 
       {/* Blog Tiles Section */}
       <section className="blog-tiles-section">
-        <div className="container">
-          <div className="tiles-container">
-            <div className="circular-scroll-wrapper">
-              {tiles.map((tile, index) => {
-                const offset = (index - currentIndex + tiles.length) % tiles.length;
+        <div className={`container tiles-container ${isRevealed ? 'revealed' : ''}`}>
+          <div className="circular-scroll-wrapper">
+            {tiles.map((tile, index) => {
+              const offset = (index - currentIndex + tiles.length) % tiles.length;
+              let style = {
+                backgroundImage: `url(${tile.imgSrc})`,
+              };
+
+              if (!isRevealed) {
                 let transform = '';
                 let opacity = 0;
                 let zIndex = 0;
                 
                 if (offset === 0) {
-                  // Center tile
                   transform = 'translateX(0) scale(1)';
                   opacity = 1;
                   zIndex = 2;
                 } else if (offset === 1) {
-                  // Right tile
                   transform = 'translateX(120px) scale(0.8)';
                   opacity = 0.5;
                   zIndex = 1;
                 } else if (offset === tiles.length - 1) {
-                  // Left tile
                   transform = 'translateX(-120px) scale(0.8)';
                   opacity = 0.5;
                   zIndex = 1;
                 }
-                
-                const style = {
-                  transform: transform,
-                  opacity: opacity,
-                  zIndex: zIndex,
-                  pointerEvents: 'none', // Disable pointer events as it's automatic
-                  backgroundImage: `url(${tile.imgSrc})`,
+
+                style = {
+                  ...style,
+                  transform,
+                  opacity,
+                  zIndex,
+                  pointerEvents: 'none',
                 };
-                
-                return (
-                  <div className="blog-tile" key={tile.id} style={style}>
-                    <div className="tile-content">
-                      <h3>{tile.title}</h3>
-                      <div className="tile-meta">
-                        <p>{tile.meta}</p>
-                        <span className="tile-arrow">↗</span>
-                      </div>
+              }
+              
+              return (
+                <div className="blog-tile" key={tile.id} style={style}>
+                  <div className="tile-content">
+                    <h3>{tile.title}</h3>
+                    <div className="tile-meta">
+                      <p>{tile.meta}</p>
+                      <span className="tile-arrow">↗</span>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section - AI Therapist */}
-      <section
-        id="ai-therapist"
-        className="features"
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      >
-        <div className="container">
-          <div className="about-content">
-            <div
-              className="about-text"
-              initial={{ opacity: 0, x: -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-            >
-              <h2>AI Therapist</h2>
-              <p>
-                Access professional-level emotional support anytime, anywhere. Our AI therapist provides compassionate guidance, helps you process feelings, and offers evidence-based coping strategies for your mental well-being.
-              </p>
-            </div>
-            <div
-              className="about-visual"
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
-              <div className="about-image">
-                <div className="image-placeholder">
-                  <img src="/therapy section.jpeg" alt="Therapy session" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section - Safe Venting Space */}
-      <section
-        id="safe-venting"
-        className="features"
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      >
-        <div className="container">
-          <div className="about-content">
-            <div
-              className="about-visual"
-              initial={{ opacity: 0, x: -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-            >
-              <div className="about-image">
-                <div className="image-placeholder">
-                  <img src="/venting.jpeg" alt="Venting space" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-              </div>
-            </div>
-            <div
-              className="about-text"
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
-              <h2>Safe Venting Space</h2>
-              <p>
-                Express your thoughts and emotions freely in a judgment-free environment. Our venting feature provides a secure space to release pent-up feelings, helping you process emotions and find emotional relief.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section - Decision Making Support */}
-      <section
-        id="decision-support"
-        className="features"
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      >
-        <div className="container">
-          <div className="about-content">
-            <div
-              className="about-text"
-              initial={{ opacity: 0, x: -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-            >
-              <h2>Decision Making Support</h2>
-              <p>
-                Navigate life's complex choices with confidence. Our AI analyzes your situation, considers multiple perspectives, and provides structured guidance to help you make informed decisions that align with your values.
-              </p>
-            </div>
-            <div
-              className="about-visual"
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
-              <div className="about-image">
-                <div className="image-placeholder">
-                  <span>🎯</span>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
