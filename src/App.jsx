@@ -33,7 +33,7 @@ function HomePage() {
     },
     {
       id: 'decision-support',
-      imgSrc: '/therapy section.jpeg',
+      imgSrc: '/Decision-tile.jpeg',
       imgAlt: 'Decision Support',
       title: 'Decision Making Support',
       meta: 'Clarity • 4 min',
