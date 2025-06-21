@@ -84,6 +84,19 @@ function HomePage() {
   const [showOverlayText, setShowOverlayText] = useState(false);
 
   useEffect(() => {
+    document.body.classList.add('scroll-lock');
+  }, []);
+
+  useEffect(() => {
+    if (showOverlayText) {
+      // Small delay to allow the text to be visible before unlocking scroll
+      setTimeout(() => {
+        document.body.classList.remove('scroll-lock');
+      }, 500); 
+    }
+  }, [showOverlayText]);
+
+  useEffect(() => {
     // Wait for last letter fade-in (1.1s delay + 0.6s duration) + 0.5s extra = 2.2s
     const fillTimeout = setTimeout(() => setStartFill(true), 2200);
     return () => clearTimeout(fillTimeout);

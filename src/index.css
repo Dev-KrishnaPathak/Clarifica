@@ -42,6 +42,10 @@ body {
   background-color: #000 !important;
 }
 
+body.scroll-lock {
+  overflow: hidden;
+}
+
 body::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Opera */
 }
