@@ -115,12 +115,19 @@ function HomePage() {
 
   // Fill animation state
   const [progress, setProgress] = useState(0);
+  const [startFill, setStartFill] = useState(false);
   useEffect(() => {
+    // Wait for last letter fade-in (1.1s delay + 0.6s duration) + 0.5s extra = 2.2s
+    const fillTimeout = setTimeout(() => setStartFill(true), 2200);
+    return () => clearTimeout(fillTimeout);
+  }, []);
+  useEffect(() => {
+    if (!startFill) return;
     let interval = setInterval(() => {
       setProgress((prev) => (prev < 100 ? prev + 1 : 100));
     }, 30);
     return () => clearInterval(interval);
-  }, []);
+  }, [startFill]);
 
   return (
     <div className="app">
@@ -143,13 +150,17 @@ function HomePage() {
                 transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1)',
               }}
             />
-            <span style={{
-              position: 'relative',
-              zIndex: 2,
-              color: `rgb(${255 - Math.round(progress * 2.55)}, ${255 - Math.round(progress * 2.55)}, ${255 - Math.round(progress * 2.55)})`,
-              transition: 'color 0.3s',
-            }}>
-              Clarifica
+            <span
+              className="center-hero-btn-text"
+              style={{
+                position: 'relative',
+                zIndex: 2,
+                color: `rgb(${255 - Math.round(progress * 2.55)}, ${255 - Math.round(progress * 2.55)}, ${255 - Math.round(progress * 2.55)})`,
+                transition: 'color 0.3s',
+              }}>
+              {Array.from('Clarifica').map((char, i) => (
+                <span className="center-hero-btn-letter" key={i}>{char}</span>
+              ))}
             </span>
           </button>
         </div>
