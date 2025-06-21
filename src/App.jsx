@@ -89,6 +89,47 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Blog Tiles Section */}
+      <section className="blog-tiles-section">
+        <div className="container">
+          <div className="tiles-container">
+            {/* Tile 1 */}
+            <a href="#ai-therapist" className="blog-tile">
+              <img src="/therapy section.jpeg" alt="AI Therapist" className="tile-image" />
+              <div className="tile-content">
+                <h3>AI Therapist</h3>
+                <div className="tile-meta">
+                  <p>Mindset • 2 min</p>
+                  <span className="tile-arrow">↗</span>
+                </div>
+              </div>
+            </a>
+            {/* Tile 2 */}
+            <a href="#safe-venting" className="blog-tile">
+              <img src="/venting.jpeg" alt="Safe Venting" className="tile-image" />
+              <div className="tile-content">
+                <h3>Safe Venting Space</h3>
+                <div className="tile-meta">
+                  <p>Expression • 3 min</p>
+                  <span className="tile-arrow">↗</span>
+                </div>
+              </div>
+            </a>
+            {/* Tile 3 */}
+            <a href="#decision-support" className="blog-tile">
+              <img src="/therapy section.jpeg" alt="Decision Support" className="tile-image" />
+              <div className="tile-content">
+                <h3>Decision Making Support</h3>
+                <div className="tile-meta">
+                  <p>Clarity • 4 min</p>
+                  <span className="tile-arrow">↗</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section - AI Therapist */}
       <section
         id="ai-therapist"
