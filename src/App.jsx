@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import LoginPage from "./LoginPage";
-import Perspectives from "./Perspectives";
+import ContentPage from "./ContentPage";
 
 function LoadingBar({ progress }) {
   return (
@@ -23,36 +23,6 @@ function Dashboard() {
 
 function HomePage() {
   const navigate = useNavigate();
-
-  // Data for the tiles
-  const initialTiles = [
-    {
-      id: 'ai-therapist',
-      imgSrc: '/therapy-tile.jpeg',
-      imgAlt: 'AI Therapist',
-      title: 'AI Therapist',
-      meta: 'Mindset • 2 min',
-      content: 'Our AI Therapist offers a conversational approach to mental wellness, providing insights and exercises based on Cognitive Behavioral Therapy. It helps you identify and challenge negative thought patterns in a safe, non-judgmental environment.'
-    },
-    {
-      id: 'safe-venting',
-      imgSrc: '/vent-tile.jpeg',
-      imgAlt: 'Safe Venting',
-      title: 'Safe Venting Space',
-      meta: 'Expression • 3 min',
-      content: 'A private and secure space for you to express your thoughts and feelings without fear of judgment. Venting can be a powerful tool for emotional release and self-reflection. Our platform ensures your data is encrypted and confidential.'
-    },
-    {
-      id: 'decision-support',
-      imgSrc: '/decision-tile.jpeg',
-      imgAlt: 'Decision Support',
-      title: 'Decision Making Support',
-      meta: 'Clarity • 4 min',
-      content: 'Struggling with a tough choice? Our decision support tool uses structured frameworks to help you weigh pros and cons, consider different perspectives, and gain clarity on your options. Make choices that align with your values and goals.'
-    },
-  ];
-
-  const [tiles] = useState(initialTiles);
 
   // Animated quote words
   const animatedWords = ["Alignment", "Wellness", "Prosperity"];
@@ -147,8 +117,6 @@ function HomePage() {
 
   return (
     <div className="app">
-      {/* Top Right Buttons */}
-      {/* Removed Log In and Sign Up buttons */}
       {/* Hero Section */}
       <section id="home" className="hero" style={{ position: 'relative' }}>
         {showOverlay && (
@@ -258,6 +226,32 @@ function HomePage() {
                     Log In
                   </button>
                 </div>
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '40px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 20,
+                    pointerEvents: 'auto',
+                  }}
+                >
+                  <button
+                    className="btn-outline"
+                    style={{ 
+                      fontSize: '1.2rem', 
+                      padding: '16px 32px',
+                      background: '#000',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.3)',
+                      color: '#fff',
+                      borderRadius: '30px'
+                    }}
+                    onClick={() => navigate('/content')}
+                  >
+                    <span>Enter Clarifica</span>
+                  </button>
+                </div>
               </>
             )}
           </div>
@@ -292,104 +286,6 @@ function HomePage() {
           </button>
         </div>
       </section>
-
-      <Perspectives tiles={tiles} />
-
-      {/* About Section */}
-      <section
-        id="about"
-        className="about"
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      >
-        <div className="container">
-          <div className="about-content">
-            <div
-              className="about-text"
-              initial={{ opacity: 0, x: -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-            >
-              <h2>About Clarifica</h2>
-              <p>
-                We believe everyone deserves access to emotional support and clarity in their decision-making. 
-                Clarifica was created to bridge the gap between professional mental health support and everyday 
-                emotional challenges, making psychological well-being accessible to everyone.
-              </p>
-              <p>
-                Our AI-powered platform combines the best of therapeutic techniques, safe emotional expression, 
-                and cognitive decision-making frameworks to provide comprehensive support for your mental health journey.
-              </p>
-            </div>
-            <div
-              className="about-visual"
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
-              <div className="about-image">
-                <div className="image-placeholder">
-                  <span>Mental Health Support</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
-              <div className="footer-logo">
-                <span className="logo-text">Clarifica</span>
-                <span className="logo-dot">.</span>
-              </div>
-              <p>Supporting your mental health journey with AI-powered clarity and compassion.</p>
-            </div>
-            <div className="footer-section">
-              <h4>Services</h4>
-              <ul>
-                <li><a href="#features">AI Therapist</a></li>
-                <li><a href="#features">Venting Space</a></li>
-                <li><a href="#features">Decision Support</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h4>Company</h4>
-              <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#careers">Careers</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#press">Press</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h4>Support</h4>
-              <ul>
-                <li><a href="#help">Help Center</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#privacy">Privacy</a></li>
-                <li><a href="#terms">Terms</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; 2024 Clarifica. All rights reserved.</p>
-            <div className="social-links">
-              <a href="#" className="social-link">Twitter</a>
-              <a href="#" className="social-link">LinkedIn</a>
-              <a href="#" className="social-link">Instagram</a>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
@@ -421,6 +317,7 @@ function AppRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/content" element={<ContentPage />} />
     </Routes>
   );
 }

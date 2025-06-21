@@ -33,10 +33,12 @@
 .selected-tile-content {
     max-width: 800px;
     margin: 0 auto;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
     padding: 40px;
     border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .selected-tile-content h2 {
@@ -108,4 +110,16 @@
 
 .right-arrow {
     right: -100px;
+}
+
+.click-instruction {
+    position: absolute;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 10;
+    pointer-events: none;
 }

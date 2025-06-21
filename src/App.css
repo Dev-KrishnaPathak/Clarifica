@@ -1039,19 +1039,27 @@ button:focus {
 
 /* Blog Tiles Section */
 .blog-tiles-section {
-  padding: 80px 0;
-  background: transparent; /* Removed the light grey background */
-  margin-top: -1px; /* Prevents gap with hero video */
+  padding: 0;
+  background: #000; /* Match hero background */
+  margin-top: 0; /* Remove negative margin */
   position: relative;
   z-index: 5;
+  min-height: 100vh; /* Ensure full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tiles-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   height: 550px; /* Set a fixed height for the scroll area */
   transition: height 0.8s ease-in-out;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .tiles-container.revealed {

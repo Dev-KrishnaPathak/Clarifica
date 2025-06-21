@@ -107,6 +107,7 @@ const Perspectives = ({ tiles }) => {
                 </div>
             )}
         </div>
+        <div className="click-instruction">Click on Card</div>
       </div>
     </section>
   );
