@@ -63,7 +63,7 @@ function HomePage() {
             playsInline
             className="hero-video"
           >
-            <source src="/waves.mp4" type="video/mp4" />
+            <source src="/third.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className="hero-overlay"></div>

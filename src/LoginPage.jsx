@@ -37,7 +37,7 @@ function LoginPage() {
           playsInline
           className="login-video"
         >
-          <source src="/third.mp4" type="video/mp4" />
+          <source src="/Second.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="login-overlay"></div>
