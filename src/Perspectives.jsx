@@ -15,6 +15,18 @@ const Perspectives = ({ tiles }) => {
     setSelectedTile(null);
   }
 
+  const handlePrev = () => {
+      const newIndex = (currentIndex - 1 + tiles.length) % tiles.length;
+      setCurrentIndex(newIndex);
+      setSelectedTile(tiles[newIndex]);
+  }
+
+  const handleNext = () => {
+      const newIndex = (currentIndex + 1) % tiles.length;
+      setCurrentIndex(newIndex);
+      setSelectedTile(tiles[newIndex]);
+  }
+
   useEffect(() => {
     if (!selectedTile) {
       intervalIdRef.current = setInterval(() => {
@@ -30,6 +42,12 @@ const Perspectives = ({ tiles }) => {
     <section className="blog-tiles-section">
       <div className={`container tiles-container ${selectedTile ? 'content-visible' : ''}`}>
         <div className="circular-scroll-wrapper">
+            {selectedTile && (
+                <>
+                    <div className="carousel-arrow left-arrow" onClick={handlePrev}>‹</div>
+                    <div className="carousel-arrow right-arrow" onClick={handleNext}>›</div>
+                </>
+            )}
           {tiles.map((tile, index) => {
             const offset = (index - currentIndex + tiles.length) % tiles.length;
             let style = {

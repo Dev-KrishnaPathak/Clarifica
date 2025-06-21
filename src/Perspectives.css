@@ -83,3 +83,29 @@
 .blog-tile.selected {
     position: absolute !important; /* Revert change */
 }
+
+.circular-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 200px;
+    transform: translateY(-50%);
+    font-size: 3rem;
+    color: black;
+    z-index: 5;
+    cursor: pointer;
+    user-select: none;
+}
+
+.left-arrow {
+    left: -100px;
+}
+
+.right-arrow {
+    right: -100px;
+}
