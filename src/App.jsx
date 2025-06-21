@@ -119,6 +119,8 @@ function HomePage() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayActive, setOverlayActive] = useState(false);
   const buttonRef = React.useRef(null);
+  const [overlayStyle, setOverlayStyle] = useState({ width: 0, height: 0, borderRadius: '50px', left: 0, top: 0 });
+  const [buttonCenter, setButtonCenter] = useState({ x: 0, y: 0 });
   useEffect(() => {
     // Wait for last letter fade-in (1.1s delay + 0.6s duration) + 0.5s extra = 2.2s
     const fillTimeout = setTimeout(() => setStartFill(true), 2200);
@@ -136,7 +138,31 @@ function HomePage() {
     if (progress === 100) {
       setTimeout(() => {
         setShowOverlay(true);
-        setTimeout(() => setOverlayActive(true), 10); // trigger scale animation
+        if (buttonRef.current) {
+          const btnRect = buttonRef.current.getBoundingClientRect();
+          const heroRect = buttonRef.current.closest('.hero').getBoundingClientRect();
+          const btnCenterX = btnRect.left - heroRect.left + btnRect.width / 2;
+          const btnCenterY = btnRect.top - heroRect.top + btnRect.height / 2;
+          setButtonCenter({ x: btnCenterX, y: btnCenterY });
+          setOverlayStyle({
+            width: btnRect.width,
+            height: btnRect.height,
+            borderRadius: '50px',
+            left: btnCenterX - btnRect.width / 2,
+            top: btnCenterY - btnRect.height / 2,
+          });
+          setTimeout(() => {
+            setOverlayActive(true);
+            setOverlayStyle({
+              width: '100%',
+              height: '100%',
+              borderRadius: '0px',
+              left: 0,
+              top: 0,
+              transition: 'width 0.8s cubic-bezier(0.4,0,0.2,1), height 0.8s cubic-bezier(0.4,0,0.2,1), border-radius 0.8s cubic-bezier(0.4,0,0.2,1), left 0.8s cubic-bezier(0.4,0,0.2,1), top 0.8s cubic-bezier(0.4,0,0.2,1)',
+            });
+          }, 10);
+        }
       }, 500);
     }
   }, [progress]);
@@ -152,49 +178,34 @@ function HomePage() {
             className={`white-fill-overlay${overlayActive ? ' active' : ''}`}
             style={{
               position: 'absolute',
-              left: 0,
-              top: 0,
-              width: '100%',
-              height: '100%',
+              left: overlayStyle.left,
+              top: overlayStyle.top,
+              width: overlayStyle.width,
+              height: overlayStyle.height,
+              borderRadius: overlayStyle.borderRadius,
               zIndex: 3000,
               pointerEvents: 'none',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               background: 'transparent',
-              transition: 'background 0.5s',
+              overflow: 'hidden',
+              transition: overlayStyle.transition || 'width 0.8s cubic-bezier(0.4,0,0.2,1), height 0.8s cubic-bezier(0.4,0,0.2,1), border-radius 0.8s cubic-bezier(0.4,0,0.2,1)',
             }}
           >
-            <div
+            <video
+              src="/third.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
               style={{
-                width: buttonRef.current ? buttonRef.current.offsetWidth : 0,
-                height: buttonRef.current ? buttonRef.current.offsetHeight : 0,
-                borderRadius: '50px',
-                overflow: 'hidden',
-                background: 'transparent',
-                transition: 'transform 0.8s cubic-bezier(0.4,0,0.2,1)',
-                transform: overlayActive
-                  ? 'scale(16, 16)'
-                  : 'scale(1, 1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
               }}
-            >
-              <video
-                src="/waves.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block'
-                }}
-              />
-            </div>
+            />
           </div>
         )}
         <div className="hero-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
