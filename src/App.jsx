@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import LoginPage from "./LoginPage";
@@ -14,6 +14,42 @@ function Dashboard() {
 
 function HomePage() {
   const navigate = useNavigate();
+
+  // Data for the tiles
+  const initialTiles = [
+    {
+      id: 'ai-therapist',
+      imgSrc: '/therapy-tile.jpeg',
+      imgAlt: 'AI Therapist',
+      title: 'AI Therapist',
+      meta: 'Mindset • 2 min',
+    },
+    {
+      id: 'safe-venting',
+      imgSrc: '/venting.jpeg',
+      imgAlt: 'Safe Venting',
+      title: 'Safe Venting Space',
+      meta: 'Expression • 3 min',
+    },
+    {
+      id: 'decision-support',
+      imgSrc: '/therapy section.jpeg',
+      imgAlt: 'Decision Support',
+      title: 'Decision Making Support',
+      meta: 'Clarity • 4 min',
+    },
+  ];
+
+  const [tiles] = useState(initialTiles);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(prevIndex => (prevIndex + 1) % tiles.length);
+    }, 3000); // Change tile every 3 seconds
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, [tiles.length]);
 
   // Animated quote words
   const animatedWords = ["Alignment", "Wellness", "Prosperity"];
@@ -93,39 +129,51 @@ function HomePage() {
       <section className="blog-tiles-section">
         <div className="container">
           <div className="tiles-container">
-            {/* Tile 1 */}
-            <a href="#ai-therapist" className="blog-tile">
-              <img src="/therapy section.jpeg" alt="AI Therapist" className="tile-image" />
-              <div className="tile-content">
-                <h3>AI Therapist</h3>
-                <div className="tile-meta">
-                  <p>Mindset • 2 min</p>
-                  <span className="tile-arrow">↗</span>
-                </div>
-              </div>
-            </a>
-            {/* Tile 2 */}
-            <a href="#safe-venting" className="blog-tile">
-              <img src="/venting.jpeg" alt="Safe Venting" className="tile-image" />
-              <div className="tile-content">
-                <h3>Safe Venting Space</h3>
-                <div className="tile-meta">
-                  <p>Expression • 3 min</p>
-                  <span className="tile-arrow">↗</span>
-                </div>
-              </div>
-            </a>
-            {/* Tile 3 */}
-            <a href="#decision-support" className="blog-tile">
-              <img src="/therapy section.jpeg" alt="Decision Support" className="tile-image" />
-              <div className="tile-content">
-                <h3>Decision Making Support</h3>
-                <div className="tile-meta">
-                  <p>Clarity • 4 min</p>
-                  <span className="tile-arrow">↗</span>
-                </div>
-              </div>
-            </a>
+            <div className="circular-scroll-wrapper">
+              {tiles.map((tile, index) => {
+                const offset = (index - currentIndex + tiles.length) % tiles.length;
+                let transform = '';
+                let opacity = 0;
+                let zIndex = 0;
+                
+                if (offset === 0) {
+                  // Center tile
+                  transform = 'translateX(0) scale(1)';
+                  opacity = 1;
+                  zIndex = 2;
+                } else if (offset === 1) {
+                  // Right tile
+                  transform = 'translateX(120px) scale(0.8)';
+                  opacity = 0.5;
+                  zIndex = 1;
+                } else if (offset === tiles.length - 1) {
+                  // Left tile
+                  transform = 'translateX(-120px) scale(0.8)';
+                  opacity = 0.5;
+                  zIndex = 1;
+                }
+                
+                const style = {
+                  transform: transform,
+                  opacity: opacity,
+                  zIndex: zIndex,
+                  pointerEvents: 'none', // Disable pointer events as it's automatic
+                  backgroundImage: `url(${tile.imgSrc})`,
+                };
+                
+                return (
+                  <div className="blog-tile" key={tile.id} style={style}>
+                    <div className="tile-content">
+                      <h3>{tile.title}</h3>
+                      <div className="tile-meta">
+                        <p>{tile.meta}</p>
+                        <span className="tile-arrow">↗</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

@@ -22,7 +22,7 @@
 }
 
 body {
-  background-color: var(--primary-bg) !important;
+  background-color: #fff !important;
   color: var(--primary-color);
 }
 
@@ -31,7 +31,7 @@ body {
   line-height: 1.6;
   color: var(--primary-color);
   overflow-x: hidden;
-  background: var(--primary-bg) !important;
+  background: #fff !important;
 }
 
 .container {
@@ -1073,16 +1073,26 @@ button:focus {
 /* Blog Tiles Section */
 .blog-tiles-section {
   padding: 80px 0;
-  background: #f9fafb; /* A light grey background for the section */
+  background: transparent; /* Removed the light grey background */
   margin-top: -1px; /* Prevents gap with hero video */
   position: relative;
   z-index: 5;
 }
 
 .tiles-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 550px; /* Increased from 450px */
+}
+
+.circular-scroll-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px; /* Adjusted to give side tiles more space */
+  height: 100%;
+  transform: translateY(-8px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.03), 0 15px 30px rgba(0,0,0,0.08);
 }
 
 .blog-tile {
@@ -1090,35 +1100,41 @@ button:focus {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0,0,0,0.02), 0 10px 20px rgba(0,0,0,0.05);
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease-in-out;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end; /* Push content to bottom */
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%; /* Fill the container */
+  background-size: cover;
+  background-position: center;
 }
 
 .blog-tile:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.03), 0 15px 30px rgba(0,0,0,0.08);
+  /* transform is now controlled by JS, only apply to the top tile */
 }
 
 .tile-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+  /* This class is no longer used */
 }
 
 .tile-content {
   padding: 24px;
-  flex-grow: 1;
+  flex-grow: 0; /* Do not grow to fill space */
   display: flex;
   flex-direction: column;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%);
 }
 
 .tile-content h3 {
   font-size: 20px;
   margin-bottom: 12px;
-  color: #111827; /* Darker text for readability */
+  color: white;
   line-height: 1.4;
 }
 
@@ -1129,16 +1145,16 @@ button:focus {
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
-  color: #6b7280; /* Muted color for meta text */
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .tile-arrow {
   font-size: 18px;
-  color: #9ca3af;
+  color: rgba(255, 255, 255, 0.8);
   transition: transform 0.3s ease;
 }
 
 .blog-tile:hover .tile-arrow {
   transform: translateX(3px) translateY(-3px);
-  color: #374151;
+  color: white;
 }
