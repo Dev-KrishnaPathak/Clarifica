@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./LoginPage.css";
 
 function LoginPage() {
@@ -11,6 +11,13 @@ function LoginPage() {
     name: ""
   });
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.showSignUp) {
+      setIsLogin(false);
+    }
+  }, [location.state]);
 
   const handleInputChange = (e) => {
     setFormData({

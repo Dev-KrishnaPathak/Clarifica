@@ -63,33 +63,15 @@ function HomePage() {
   // Animated quote words
   const animatedWords = ["Alignment", "Wellness", "Prosperity"];
   const [wordIndex, setWordIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
-    setAnimating(true);
-    const timeout = setTimeout(() => setAnimating(false), 1500); // animation duration
     const interval = setInterval(() => {
-      setAnimating(true);
-      setTimeout(() => setAnimating(false), 1500);
       setWordIndex((prev) => (prev + 1) % animatedWords.length);
     }, 3500);
     return () => {
       clearInterval(interval);
-      clearTimeout(timeout);
     };
   }, []);
-
-  const quote = [
-    "The next chapter in your life is called ",
-    <span className="animated-quote-fancy-word-wrapper" key="animated-word-wrapper">
-      <span
-        key={animatedWords[wordIndex]}
-        className={`animated-quote-fancy-word${animating ? ' animating' : ''}`}
-      >
-        {animatedWords[wordIndex]}
-      </span>
-    </span>
-  ];
 
   // Fill animation state
   const [progress, setProgress] = useState(0);
@@ -196,25 +178,80 @@ function HomePage() {
               }}
             />
             {showOverlayText && (
-              <span
-                className="overlay-fade-in-text"
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  color: '#fff',
-                  fontSize: '12rem',
-                  fontWeight: 400,
-                  textShadow: '0 2px 16px rgba(0,0,0,0.5)',
-                  pointerEvents: 'none',
-                  letterSpacing: '0.05em',
-                  zIndex: 10,
-                  fontFamily: 'Bacasime Antique, serif',
-                }}
-              >
-                Clarifica
-              </span>
+              <>
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: 10,
+                    pointerEvents: 'none',
+                    textAlign: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <span
+                    className="overlay-fade-in-text"
+                    style={{
+                      color: '#fff',
+                      fontSize: '12rem',
+                      fontWeight: 400,
+                      textShadow: '0 2px 16px rgba(0,0,0,0.5)',
+                      letterSpacing: '0.05em',
+                      fontFamily: 'Bacasime Antique, serif',
+                      lineHeight: 0.8,
+                    }}
+                  >
+                    Clarifica
+                  </span>
+                  <p className="hero-subtitle overlay-fade-in-text">
+                    <span style={{position: 'relative', left: '60px'}}>The next chapter in your life is called{' '}</span>
+                    <span className="animated-word-container">
+                      {animatedWords.map((word, index) => (
+                        <span
+                          key={word}
+                          className={`animated-word ${index === wordIndex ? 'visible' : ''}`}
+                        >
+                          {word}
+                        </span>
+                      ))}
+                    </span>
+                  </p>
+                </div>
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '40px',
+                    right: '40px',
+                    display: 'flex',
+                    gap: '16px',
+                    zIndex: 20,
+                    pointerEvents: 'auto',
+                  }}
+                >
+                  <button
+                    className="btn-outline"
+                    style={{ fontSize: '1rem', padding: '8px 24px' }}
+                    onClick={() => navigate('/login', { state: { showSignUp: true } })}
+                  >
+                    <span>Sign Up</span>
+                  </button>
+                  <button
+                    className="btn-primary"
+                    style={{
+                      fontSize: '1rem',
+                      padding: '8px 24px',
+                      background: 'transparent',
+                      color: 'var(--button-text)',
+                      boxShadow: 'none',
+                    }}
+                    onClick={() => navigate('/login')}
+                  >
+                    Log In
+                  </button>
+                </div>
+              </>
             )}
           </div>
         )}
