@@ -5,11 +5,9 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
 }
 
 html, body {
-  overflow: hidden;
 }
 
 /* Background Video */
@@ -53,7 +51,7 @@ html, body {
 }
 
 .login-card {
-  background: rgba(255, 255, 255, 0.025);
+  background: rgba(255, 255, 255, 0.01);
   backdrop-filter: blur(20px);
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
