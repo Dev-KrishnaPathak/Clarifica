@@ -50,37 +50,15 @@ function HomePage() {
 
   const [tiles] = useState(initialTiles);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isRevealed, setIsRevealed] = useState(false);
   const intervalIdRef = useRef(null);
 
   // Automatic tile loop effect
   useEffect(() => {
-    // Only run the interval if the view is not revealed
-    if (!isRevealed) {
-      intervalIdRef.current = setInterval(() => {
-        setCurrentIndex(prevIndex => (prevIndex + 1) % tiles.length);
-      }, 3000);
-    } else {
-      // If it is revealed, clear any existing interval
-      clearInterval(intervalIdRef.current);
-    }
-    // Cleanup function
+    intervalIdRef.current = setInterval(() => {
+      setCurrentIndex(prevIndex => (prevIndex + 1) % tiles.length);
+    }, 3000);
     return () => clearInterval(intervalIdRef.current);
-  }, [tiles.length, isRevealed]);
-
-  // Scroll listener to reveal the linear layout
-  useEffect(() => {
-    const handleRevealScroll = () => {
-      setIsRevealed(true);
-    };
-
-    // Add the event listener to fire only once
-    window.addEventListener('wheel', handleRevealScroll, { once: true });
-
-    return () => {
-      window.removeEventListener('wheel', handleRevealScroll, { once: true });
-    };
-  }, []);
+  }, [tiles.length]);
 
   // Animated quote words
   const animatedWords = ["Alignment", "Wellness", "Prosperity"];
@@ -273,7 +251,7 @@ function HomePage() {
 
       {/* Blog Tiles Section */}
       <section className="blog-tiles-section">
-        <div className={`container tiles-container ${isRevealed ? 'revealed' : ''}`}>
+        <div className="container tiles-container">
           <div className="circular-scroll-wrapper">
             {tiles.map((tile, index) => {
               const offset = (index - currentIndex + tiles.length) % tiles.length;
@@ -281,33 +259,30 @@ function HomePage() {
                 backgroundImage: `url(${tile.imgSrc})`,
               };
 
-              if (!isRevealed) {
-                let transform = '';
-                let opacity = 0;
-                let zIndex = 0;
-                
-                if (offset === 0) {
-                  transform = 'translateX(0) scale(1)';
-                  opacity = 1;
-                  zIndex = 2;
-                } else if (offset === 1) {
-                  transform = 'translateX(120px) scale(0.8)';
-                  opacity = 0.5;
-                  zIndex = 1;
-                } else if (offset === tiles.length - 1) {
-                  transform = 'translateX(-120px) scale(0.8)';
-                  opacity = 0.5;
-                  zIndex = 1;
-                }
-
-                style = {
-                  ...style,
-                  transform,
-                  opacity,
-                  zIndex,
-                  pointerEvents: 'none',
-                };
+              let transform = '';
+              let opacity = 0;
+              let zIndex = 0;
+              if (offset === 0) {
+                transform = 'translateX(0) scale(1)';
+                opacity = 1;
+                zIndex = 2;
+              } else if (offset === 1) {
+                transform = 'translateX(120px) scale(0.8)';
+                opacity = 0.5;
+                zIndex = 1;
+              } else if (offset === tiles.length - 1) {
+                transform = 'translateX(-120px) scale(0.8)';
+                opacity = 0.5;
+                zIndex = 1;
               }
+
+              style = {
+                ...style,
+                transform,
+                opacity,
+                zIndex,
+                pointerEvents: 'none',
+              };
               
               return (
                 <div className="blog-tile" key={tile.id} style={style}>
