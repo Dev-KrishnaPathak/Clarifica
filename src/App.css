@@ -1244,3 +1244,13 @@ button:focus {
   background: #fff;
   transition: background 0.5s;
 }
+
+@keyframes overlayFadeInText {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.overlay-fade-in-text {
+  opacity: 0;
+  animation: overlayFadeInText 0.8s ease-in forwards;
+}

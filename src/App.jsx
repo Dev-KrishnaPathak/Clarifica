@@ -121,6 +121,8 @@ function HomePage() {
   const buttonRef = React.useRef(null);
   const [overlayStyle, setOverlayStyle] = useState({ width: 0, height: 0, borderRadius: '50px', left: 0, top: 0 });
   const [buttonCenter, setButtonCenter] = useState({ x: 0, y: 0 });
+  const [showOverlayText, setShowOverlayText] = useState(false);
+
   useEffect(() => {
     // Wait for last letter fade-in (1.1s delay + 0.6s duration) + 0.5s extra = 2.2s
     const fillTimeout = setTimeout(() => setStartFill(true), 2200);
@@ -167,6 +169,15 @@ function HomePage() {
     }
   }, [progress]);
 
+  useEffect(() => {
+    if (showOverlay) {
+      const textTimeout = setTimeout(() => setShowOverlayText(true), 500);
+      return () => clearTimeout(textTimeout);
+    } else {
+      setShowOverlayText(false);
+    }
+  }, [showOverlay]);
+
   return (
     <div className="app">
       {/* Top Right Buttons */}
@@ -206,6 +217,27 @@ function HomePage() {
                 display: 'block',
               }}
             />
+            {showOverlayText && (
+              <span
+                className="overlay-fade-in-text"
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  color: '#fff',
+                  fontSize: '12rem',
+                  fontWeight: 400,
+                  textShadow: '0 2px 16px rgba(0,0,0,0.5)',
+                  pointerEvents: 'none',
+                  letterSpacing: '0.05em',
+                  zIndex: 10,
+                  fontFamily: 'Bacasime Antique, serif',
+                }}
+              >
+                Clarifica
+              </span>
+            )}
           </div>
         )}
         <div className="hero-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
