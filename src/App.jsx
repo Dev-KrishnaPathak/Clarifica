@@ -207,7 +207,7 @@ function HomePage() {
                 >
                   <button
                     className="btn-outline"
-                    style={{ fontSize: '1rem', padding: '8px 24px' }}
+                    style={{ fontSize: '1rem', padding: '12px 24px' }}
                     onClick={() => navigate('/login', { state: { showSignUp: true } })}
                   >
                     <span>Sign Up</span>
@@ -220,6 +220,7 @@ function HomePage() {
                       background: 'transparent',
                       color: 'var(--button-text)',
                       boxShadow: 'none',
+                      border: '1px solid white',
                     }}
                     onClick={() => navigate('/login')}
                   >
@@ -229,7 +230,7 @@ function HomePage() {
                 <div
                   style={{
                     position: 'absolute',
-                    bottom: '40px',
+                    bottom: '120px',
                     left: '50%',
                     transform: 'translateX(-50%)',
                     zIndex: 20,
