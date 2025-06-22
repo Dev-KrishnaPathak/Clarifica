@@ -1,6 +1,7 @@
 .content-page {
-  background: #fff;
+  background: #f3f4f6 !important;
   min-height: 100vh;
+  border: 2px solid #e0e0e0;
 }
 
 /* Navigation Bar */
@@ -131,7 +132,7 @@
 /* About Section */
 .about {
   padding: 100px 0;
-  background: var(--section-bg);
+  background: #f3f4f6 !important;
 }
 
 .about-content {
@@ -142,8 +143,8 @@
 }
 
 .about-text {
-  background: #2f4753;
-  color: white;
+  background: #f3f4f6 !important;
+  color: #222 !important;
   border-radius: 16px;
   padding: 32px;
 }
@@ -151,7 +152,7 @@
 .about-text h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: white;
+  color: #222 !important;
   margin-bottom: 24px;
 }
 
@@ -160,6 +161,11 @@
   line-height: 1.7;
   margin-bottom: 24px;
   font-size: 1.125rem;
+}
+
+.about-text h2,
+.about-text p {
+  color: #222 !important;
 }
 
 .about-visual {

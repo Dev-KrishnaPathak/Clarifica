@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-route
 import "./App.css";
 import LoginPage from "./LoginPage";
 import ContentPage from "./ContentPage";
+import AiTherapistChat from './AiTherapistChat';
+import VentChat from './VentChat';
+import DecisionSupportChat from './DecisionSupportChat';
 
 function LoadingBar({ progress }) {
   return (
@@ -197,7 +200,7 @@ function HomePage() {
                 <div
                   style={{
                     position: 'absolute',
-                    top: '40px',
+                    top: '20px',
                     right: '40px',
                     display: 'flex',
                     gap: '16px',
@@ -207,7 +210,7 @@ function HomePage() {
                 >
                   <button
                     className="btn-outline"
-                    style={{ fontSize: '1rem', padding: '12px 24px' }}
+                    style={{ fontSize: '1rem', padding: '10px 14px' }}
                     onClick={() => navigate('/login', { state: { showSignUp: true } })}
                   >
                     <span>Sign Up</span>
@@ -216,11 +219,12 @@ function HomePage() {
                     className="btn-primary"
                     style={{
                       fontSize: '1rem',
-                      padding: '8px 24px',
+                      padding: '10px 14px',
                       background: 'transparent',
                       color: 'var(--button-text)',
                       boxShadow: 'none',
-                      border: '1px solid white',
+                      border: '1px solid #fff',
+                      transform: 'none'
                     }}
                     onClick={() => navigate('/login')}
                   >
@@ -230,7 +234,7 @@ function HomePage() {
                 <div
                   style={{
                     position: 'absolute',
-                    bottom: '120px',
+                    bottom: '80px',
                     left: '50%',
                     transform: 'translateX(-50%)',
                     zIndex: 20,
@@ -244,7 +248,7 @@ function HomePage() {
                       padding: '16px 32px',
                       background: '#000',
                       backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
+                      border: 'none',
                       color: '#fff',
                       borderRadius: '30px'
                     }}
@@ -319,6 +323,9 @@ function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/content" element={<ContentPage />} />
+      <Route path="/ai-therapist" element={<AiTherapistChat />} />
+      <Route path="/vent" element={<VentChat />} />
+      <Route path="/decision-support" element={<DecisionSupportChat />} />
     </Routes>
   );
 }

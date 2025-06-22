@@ -38,35 +38,6 @@ function ContentPage() {
 
   return (
     <div className="content-page">
-      {/* Navigation Bar */}
-      <nav className="navbar">
-        <div className="nav-container">
-          <div className="nav-logo">
-            <span className="logo-text">Clarifica</span>
-            <span className="logo-dot">.</span>
-          </div>
-          <div className="nav-menu">
-            <a href="#perspectives" className="nav-link">Perspectives</a>
-            <a href="#about" className="nav-link">About</a>
-            <a href="#contact" className="nav-link">Contact</a>
-            <div className="nav-cta">
-              <button 
-                className="btn-primary"
-                onClick={() => navigate('/login')}
-              >
-                Log In
-              </button>
-              <button 
-                className="btn-secondary"
-                onClick={() => navigate('/login', { state: { showSignUp: true } })}
-              >
-                Sign Up
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Perspectives Section */}
       <section id="perspectives">
         <Perspectives tiles={tiles} />
@@ -120,24 +91,6 @@ function ContentPage() {
                 <li><a href="#perspectives">Venting Space</a></li>
                 <li><a href="#perspectives">Decision Support</a></li>
                 <li><a href="#pricing">Pricing</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h4>Company</h4>
-              <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#careers">Careers</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#press">Press</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h4>Support</h4>
-              <ul>
-                <li><a href="#help">Help Center</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#privacy">Privacy</a></li>
-                <li><a href="#terms">Terms</a></li>
               </ul>
             </div>
           </div>

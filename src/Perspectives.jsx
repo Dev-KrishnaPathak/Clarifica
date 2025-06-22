@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Perspectives.css';
 
 const Perspectives = ({ tiles }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedTile, setSelectedTile] = useState(null);
   const intervalIdRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleTileClick = (tile, index) => {
     setCurrentIndex(index);
@@ -37,6 +39,14 @@ const Perspectives = ({ tiles }) => {
     }
     return () => clearInterval(intervalIdRef.current);
   }, [tiles.length, selectedTile]);
+
+  // Map tile id to route
+  const getSessionRoute = (tileId) => {
+    if (tileId === 'ai-therapist') return '/ai-therapist';
+    if (tileId === 'safe-venting') return '/vent';
+    if (tileId === 'decision-support') return '/decision-support';
+    return '/';
+  };
 
   return (
     <section className="blog-tiles-section">
@@ -104,6 +114,9 @@ const Perspectives = ({ tiles }) => {
                     <h2>{selectedTile.title}</h2>
                     <p>{selectedTile.content}</p>
                     <button onClick={handleClose}>Close</button>
+                    <button style={{marginLeft: '16px'}} onClick={() => navigate(getSessionRoute(selectedTile.id))}>
+                      Start Session
+                    </button>
                 </div>
             )}
         </div>
