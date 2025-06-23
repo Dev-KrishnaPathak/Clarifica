@@ -1,27 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function VentChat() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const wsRef = useRef(null);
+  const lastLength = useRef(0);
 
-  const sendMessage = async () => {
+  const startWebSocket = (userInput) => {
+    wsRef.current = new WebSocket('wss://clarifica.onrender.com/ws/chat');
+    wsRef.current.onopen = () => {
+      wsRef.current.send(JSON.stringify({
+        user_message: userInput,
+        chat_type: 'vent'
+      }));
+    };
+    wsRef.current.onclose = () => {
+      setLoading(false);
+      lastLength.current = 0;
+    };
+    wsRef.current.onerror = () => {
+      setMessages(msgs => [...msgs, { from: 'ai', text: 'WebSocket error.' }]);
+      setLoading(false);
+      lastLength.current = 0;
+    };
+    wsRef.current.onmessage = (event) => {
+      if (event.data === '[END]') {
+        setLoading(false);
+        wsRef.current.close();
+        lastLength.current = 0;
+        return;
+      }
+      setMessages(msgs => {
+        let updated = [...msgs];
+        if (updated.length && updated[updated.length - 1].from === 'ai') {
+          const newText = event.data.substring(lastLength.current);
+          updated[updated.length - 1].text += newText;
+          lastLength.current = event.data.length;
+          return updated;
+        } else {
+          lastLength.current = event.data.length;
+          return [...msgs, { from: 'ai', text: event.data }];
+        }
+      });
+    };
+  };
+
+  const sendMessage = () => {
     if (!input.trim()) return;
     setMessages([...messages, { from: 'user', text: input }]);
     setLoading(true);
-    try {
-      const res = await fetch('http://localhost:8000/vent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_message: input })
-      });
-      const data = await res.json();
-      setMessages(msgs => [...msgs, { from: 'ai', text: data.response }]);
-    } catch (err) {
-      setMessages(msgs => [...msgs, { from: 'ai', text: 'Error connecting to server.' }]);
-    }
+    startWebSocket(input);
     setInput('');
-    setLoading(false);
   };
 
   return (
