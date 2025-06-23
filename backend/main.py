@@ -1,71 +1,105 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-import requests
 from typing import Optional
+import requests
+import threading
+import time
 import json
+import logging
 
+# --- Configuration ---
+OLLAMA_API_URL = "http://localhost:11434/api/generate"
+OLLAMA_MODEL = "llama3:8b"
+
+# --- Logging setup ---
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("clarifica-backend")
+
+# --- FastAPI app setup ---
 app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For development, allows all origins
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-class Message(BaseModel):
-    user_message: str
+# --- HTTP session for connection pooling ---
+session = requests.Session()
 
-# Utility function to call Ollama API
-OLLAMA_API_URL = "http://localhost:11434/api/chat"
-OLLAMA_MODEL = "llama3"  # Changed to llama3 as requested
-
-def query_ollama(user_message: str, system_prompt: Optional[str] = None):
-    payload = {
-        "model": OLLAMA_MODEL,
-        "messages": [
-            {"role": "user", "content": user_message}
-        ]
-    }
-    if system_prompt:
-        payload["messages"].insert(0, {"role": "system", "content": system_prompt})
-    try:
-        response = requests.post(OLLAMA_API_URL, json=payload, timeout=60, stream=True)
-        response.raise_for_status()
-        # Ollama streams JSON objects, one per line
-        contents = []
-        for line in response.iter_lines():
-            if line:
-                data = json.loads(line)
-                if "message" in data and "content" in data["message"]:
-                    contents.append(data["message"]["content"])
-        return "".join(contents) if contents else "[No response from Ollama]"
-    except Exception as e:
-        return f"[Ollama API error: {e}]"
+SYSTEM_PROMPTS = {
+    "ai-therapist": "You are Dr. Sophia, a professional, empathetic, and solution-oriented AI therapist. Respond with empathy and actionable advice.",
+    "vent": "You are Riley, a casual, supportive, and active listener. Respond in a friendly and understanding manner.",
+    "decision-support": "You are Atlas, a logical and structured decision support assistant. Help the user break down their problem and consider options."
+}
 
 @app.get("/")
 def read_root():
     return {"message": "Hello from FastAPI!"}
 
-@app.post("/ai-therapist")
-def ai_therapist(message: Message):
-    # Dr. Sophia: Professional, empathetic, solution-oriented
-    system_prompt = "You are Dr. Sophia, a professional, empathetic, and solution-oriented AI therapist. Respond with empathy and actionable advice."
-    ollama_response = query_ollama(message.user_message, system_prompt)
-    return {"response": ollama_response}
+@app.websocket("/ws/chat")
+async def websocket_chat(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            data = await websocket.receive_text()
+            try:
+                msg = json.loads(data)
+                user_message = msg.get("user_message", "")
+                chat_type = msg.get("chat_type", "ai-therapist")
+                system_prompt = SYSTEM_PROMPTS.get(chat_type, SYSTEM_PROMPTS["ai-therapist"])
+            except Exception as e:
+                await websocket.send_text(json.dumps({"error": f"Invalid message format: {e}"}))
+                continue
 
-@app.post("/vent")
-def vent(message: Message):
-    # Riley: Casual, supportive, active listening
-    system_prompt = "You are Riley, a casual, supportive, and active listener. Respond in a friendly and understanding manner."
-    ollama_response = query_ollama(message.user_message, system_prompt)
-    return {"response": ollama_response}
+            # Stream Ollama response, buffering raw bytes and decoding only valid UTF-8
+            prompt = f"{system_prompt}\n\nUser: {user_message}"
+            payload = {
+                "model": OLLAMA_MODEL,
+                "prompt": prompt,
+                "stream": True,
+                "temperature": 0.8
+            }
+            try:
+                full_response = ""
+                with session.post(OLLAMA_API_URL, json=payload, stream=True, timeout=60) as response:
+                    response.raise_for_status()
+                    for line in response.iter_lines():
+                        if line:
+                            try:
+                                chunk = json.loads(line.decode('utf-8'))
+                                text = chunk.get('response', '')
+                                if text:
+                                    full_response += text
+                            except Exception as e:
+                                await websocket.send_text(f"[Ollama API decode error: {e}]")
+                await websocket.send_text(full_response)
+                await websocket.send_text("[END]")
+            except Exception as e:
+                logger.error(f"Ollama API streaming error: {e}")
+                await websocket.send_text(f"[Ollama API error: {e}]")
+    except WebSocketDisconnect:
+        logger.info("WebSocket disconnected")
 
-@app.post("/decision-support")
-def decision_support(message: Message):
-    # Atlas: Logical, structured, decision support
-    system_prompt = "You are Atlas, a logical and structured decision support assistant. Help the user break down their problem and consider options."
-    ollama_response = query_ollama(message.user_message, system_prompt)
-    return {"response": ollama_response} 
+def keep_model_warm():
+    """
+    Periodically send a lightweight request to keep the Ollama model loaded.
+    """
+    while True:
+        try:
+            payload = {
+                "model": OLLAMA_MODEL,
+                "prompt": "ping",
+                "stream": False
+            }
+            session.post(OLLAMA_API_URL, json=payload, timeout=10)
+            logger.info("Sent keep-alive ping to Ollama.")
+        except Exception as e:
+            logger.warning(f"Keep-alive ping failed: {e}")
+        time.sleep(60)  # Ping every 1 minute
+
+# Start the background thread to keep the model warm
+threading.Thread(target=keep_model_warm, daemon=True).start() 
