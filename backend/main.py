@@ -102,4 +102,4 @@ def keep_model_warm():
         time.sleep(60)  # Ping every 1 minute
 
 # Start the background thread to keep the model warm
-threading.Thread(target=keep_model_warm, daemon=True).start() 
+# threading.Thread(target=keep_model_warm, daemon=True).start() 
