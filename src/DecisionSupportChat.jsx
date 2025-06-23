@@ -8,7 +8,7 @@ function DecisionSupportChat() {
   const lastLength = useRef(0);
 
   const startWebSocket = (userInput) => {
-    wsRef.current = new WebSocket('wss://clarifica-production.up.railway.app/ws/chat');
+    wsRef.current = new WebSocket('ws://34.133.11.119:8000/ws/chat');
     wsRef.current.onopen = () => {
       wsRef.current.send(JSON.stringify({
         user_message: userInput,
