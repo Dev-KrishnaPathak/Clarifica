@@ -11,7 +11,7 @@ import logging
 
 # --- Configuration ---
 # Set this to your Google Cloud VM's external IP address
-OLLAMA_API_URL = "http://10.128.0.2:11434/api/generate"  # <-- Replace <YOUR_VM_EXTERNAL_IP> with your VM's IP
+OLLAMA_API_URL = "http://104.197.86.44:11434/api/generate"  # <-- Replace <YOUR_VM_EXTERNAL_IP> with your VM's IP
 OLLAMA_MODEL = "llama3:8b"
 
 # --- Logging setup ---
