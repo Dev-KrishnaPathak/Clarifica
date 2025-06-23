@@ -10,9 +10,9 @@ import json
 import logging
 
 # --- Configuration ---
-# Set this to your Google Cloud VM's external IP address
-OLLAMA_API_URL = "http://104.197.86.44:11434/api/generate"  # <-- Replace <YOUR_VM_EXTERNAL_IP> with your VM's IP
-OLLAMA_MODEL = "microai/calm2-7b-chat"
+# Set this to your Gemini API key
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+GEMINI_API_KEY = "AIzaSyBU6NxbTZaSZB9NfYGlBR1XP81RZlR2WTI"
 
 # --- Logging setup ---
 logging.basicConfig(level=logging.INFO)
@@ -56,51 +56,24 @@ async def websocket_chat(websocket: WebSocket):
                 await websocket.send_text(json.dumps({"error": f"Invalid message format: {e}"}))
                 continue
 
-            # Stream Ollama response, buffering raw bytes and decoding only valid UTF-8
             prompt = f"{system_prompt}\n\nUser: {user_message}"
             payload = {
-                "model": OLLAMA_MODEL,
-                "prompt": prompt,
-                "stream": True,
-                "temperature": 0.8
+                "contents": [
+                    {"parts": [{"text": prompt}]}
+                ]
             }
+            url = f"{GEMINI_API_URL}?key={GEMINI_API_KEY}"
+            headers = {"Content-Type": "application/json"}
             try:
-                full_response = ""
-                with session.post(OLLAMA_API_URL, json=payload, stream=True, timeout=60) as response:
-                    response.raise_for_status()
-                    for line in response.iter_lines():
-                        if line:
-                            try:
-                                chunk = json.loads(line.decode('utf-8'))
-                                text = chunk.get('response', '')
-                                if text:
-                                    full_response += text
-                            except Exception as e:
-                                await websocket.send_text(f"[Ollama API decode error: {e}]")
-                await websocket.send_text(full_response)
+                response = session.post(url, headers=headers, json=payload, timeout=60)
+                response.raise_for_status()
+                gemini_data = response.json()
+                # Extract the response text from Gemini's response
+                text = gemini_data["candidates"][0]["content"]["parts"][0]["text"]
+                await websocket.send_text(text)
                 await websocket.send_text("[END]")
             except Exception as e:
-                logger.error(f"Ollama API streaming error: {e}")
-                await websocket.send_text(f"[Ollama API error: {e}]")
+                logger.error(f"Gemini API error: {e}")
+                await websocket.send_text(f"[Gemini API error: {e}]")
     except WebSocketDisconnect:
-        logger.info("WebSocket disconnected")
-
-def keep_model_warm():
-    """
-    Periodically send a lightweight request to keep the Ollama model loaded.
-    """
-    while True:
-        try:
-            payload = {
-                "model": OLLAMA_MODEL,
-                "prompt": "ping",
-                "stream": False
-            }
-            session.post(OLLAMA_API_URL, json=payload, timeout=10)
-            logger.info("Sent keep-alive ping to Ollama.")
-        except Exception as e:
-            logger.warning(f"Keep-alive ping failed: {e}")
-        time.sleep(60)  # Ping every 1 minute
-
-# Start the background thread to keep the model warm
-# threading.Thread(target=keep_model_warm, daemon=True).start() 
+        logger.info("WebSocket disconnected") 
