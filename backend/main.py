@@ -11,7 +11,7 @@ import logging
 
 # --- Configuration ---
 # Set this to your Gemini API key
-GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent"
 GEMINI_API_KEY = "AIzaSyBU6NxbTZaSZB9NfYGlBR1XP81RZlR2WTI"
 
 # --- Logging setup ---
