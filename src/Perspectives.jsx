@@ -114,7 +114,7 @@ const Perspectives = ({ tiles }) => {
                     <h2>{selectedTile.title}</h2>
                     <p>{selectedTile.content}</p>
                     <button onClick={handleClose}>Close</button>
-                    <button style={{marginLeft: '16px', backgroundColor: 'black', color: 'white'}} onClick={() => navigate(getSessionRoute(selectedTile.id))}>
+                    <button style={{marginLeft: '16px'}} onClick={() => navigate(getSessionRoute(selectedTile.id))}>
                       Start Session
                     </button>
                 </div>
